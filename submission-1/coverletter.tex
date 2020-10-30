@@ -1,0 +1,55 @@
+\pdfminorversion=4
+\documentclass{letter}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+
+\signature{Valéria S. Girelli\\Francis B. Moreira\\Matheus S. Serpa\\Danilo Carastan-Santos\\Philippe O. A. Navaux}
+\address{Informatics Institute\\Federal University of Rio Grande do Sul\\Porto Alegre, Brazil}
+
+
+\widowpenalty=10000
+\clubpenalty=10000
+
+\begin{document}
+
+
+\begin{letter}{}
+
+\opening{Dear Editor-in-Chief:}
+
+Please find enclosed our manuscript, \emph{Understanding Memory Prefetcher Performance over Parallel Applications: From Real to Simulated}, by Girelli et al., which we would like to submit for publication in the special issue of WSCAD 2019 in Concurrency and Computation: Practice and Experience.
+
+In this paper, we provide a better understanding of the memory prefetcher's role in the performance of HPC applications, considering the prefetcher algorithms offered by both the real hardware and the simulators. We performed a careful experimental campaign, executing the NAS parallel benchmark (NPB) on a real Skylake machine, and as well in a simulated environment with the ZSim and Sniper simulators, taking into account the prefetcher algorithms offered by both Skylake and the simulators. 
+We obtained many interesting findings about the prefetcher's behavior on the NPB applications. Some highlights of these findings are: 
+
+\begin{itemize}
+    \item We show experimental evidence that an L2 memory prefetcher is more efficient in comparison with an L1 prefetcher, since avoiding excessive L3 cache accesses better contributes to performance, when comparing to accessing the L2 cache;
+    \item We show evidence that the prefetchers' contribution to performance is limited by the level of parallelism of the application, mainly due to the increase in communication and memory contention as the level of parallelism increases;
+    \item The Skylake and NPB simulation with ZSim and Sniper had poor accuracy in predicting the NPB applications performance, with and without simulating prefetcher algorithms, mainly due distinctions of the models and prefetcher algorithms present in ZSim and Sniper when compared to Skylake.
+\end{itemize}
+
+This article is an extension of our previous paper \emph{Impacto do Prefetcher na Precisão de Simulações de Arquiteturas Paralelas}, published in the WSCAD 2019 conference. Compared to the previously published paper, the paper has undergone major changes. 
+
+These include:
+
+\begin{itemize}
+
+    \item We add the Sniper simulator, which supports prefetcher algorithms;
+
+    \item We used a newer hardware model in the system used in our evaluation;
+
+    \item We add  more detailed analysis of the NPB benchmark performance on both real and simulated architecture executions;
+
+    \item We adopt the instructions per cycle (IPC) metric to evaluate the performance of the NPB benchmark.
+\end{itemize}
+
+We believe our findings would appeal to the readership of the Concurrency and Computation: Practice and Experience.
+This manuscript has not been published elsewhere and is not under consideration by another journal.
+
+We look forward to hearing from you at your earliest convenience.
+
+\closing{Sincerely,}
+
+\end{letter}
+
+\end{document}

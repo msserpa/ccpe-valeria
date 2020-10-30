@@ -1,0 +1,12 @@
+**/*.fls
+**/*latexmk
+**/*.aux
+**/*.bbl
+**/*.blg
+**/*.log
+**/*.out
+**/*.cut
+**/*.pag
+**/*~
+.DS_Store
+.dropbox
