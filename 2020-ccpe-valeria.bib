@@ -1,49 +1,11 @@
-@misc{charney1995GeneralizedCB,
-  title={Generalized correlation based hardware prefetching},
-  author={Mark J. Charney and Anthony P. Reeves},
-  year={1995},
-  howpublished={\url{https://www.semanticscholar.org/paper/Generalized-correlation-based-hardware-prefetching-Charney-Reeves/86b3c8787a63f4d1d30ff53ac115cbd8881a7af7}},
-  note = "[Accesed in: 18 Apr. 2020]"
-}
-
-@misc{huberty2018content,
-  title={Content-directed prefetch circuit with quality filtering},
-  author={Huberty, Tyler J and Meier, Stephan G and Agarwal, Mridul},
-  year={2018},
-  month=feb # "~6",
-  publisher={Google Patents},
-  note={US Patent 9,886,385}
-}
-
-@misc{ZSim2016Validation,
-  title={ZSim Tutorial Validation},
-  howpublished="\url{http://zsim.csail.mit.edu/tutorial/slides/validation.pdf}",
-  author={Sanchez, D.},
-  year={2016},
-  note = "[Accesed in: 10 Sept. 2019]"
-}
-
-@misc{intelmanual,
-    title={Intel® 64 and IA-32 Architectures Optimization Reference Manual},
-    author={Intel},
-    howpublished={\url{https://software.intel.com/sites/default/files/managed/9e/bc/64-ia-32-architectures-optimization-manual.pdf}},
-    year={2019},
-    note = "[Accesed in: 16 Jan. 2020]"
-}
-
-@misc{SAPguide,
-    title={Dell SAP NetWeaver Benchmark Info},
-    author={Dell},
-    howpublished={\url{https://www.dell.com/downloads/global/solutions/Dell_SAP_NetWeaver_Benchmark_Info.pdf}},
-    year={2006},
-    note = "[Accesed in: 24 Mar. 2020]"
-}
-
-@book{cruz2018thread,
-  title={Thread and Data Mapping for Multicore Systems: Improving Communication and Memory Accesses},
-  author={Cruz, Eduardo HM and Diener, Matthias and Navaux, Philippe OA},
-  year={2018},
-  publisher={Springer}
+@article{wulf1995memory,
+author = {Wulf, Wm and McKee, Sally},
+year = {1996},
+month = {01},
+pages = {},
+title = {Hitting the Memory Wall: Implications of the Obvious},
+volume = {23},
+journal = {Computer Architecture News}
 }
 
 @article{skadron2003challenges,
@@ -57,44 +19,12 @@
   publisher={IEEE}
 }
 
-@inproceedings{gutierrez2014sources,
-  title={Sources of error in full-system simulation},
-  author={Gutierrez, Anthony and Pusdesris, Joseph and Dreslinski, Ronald G and Mudge, Trevor and Sudanthi, Chander and Emmons, Christopher D and Hayenga, Mitchell and Paver, Nigel},
-  booktitle={2014 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)},
-  editor={Aamodt, Tor and Hempstead, Mark},
-  pages={13--22},
-  year={2014},
-  organization={IEEE}
-}
-
-@inproceedings{walker2018hardware,
-  title={Hardware-validated CPU performance and energy modelling},
-  author={Walker, Matthew and Bischoff, Sascha and Diestelhorst, Stephan and Merrett, Geoff and Al-Hashimi, Bashir},
-  booktitle={2018 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)},
-  editor={Nikolopoulos, Dimitrios and Supinski, Bronis and Delimitrou, Christina},
-  pages={44--53},
-  year={2018},
-  organization={IEEE}
-}
-
-@inproceedings{adileh2019racing,
-  title={Racing to Hardware-Validated Simulation},
-  author={Adileh, Almutaz and Gonz{\'a}lez-Alvarez, Cecilia and Ruiz, Juan Miguel De Haro and Eeckhout, Lieven},
-  booktitle={2019 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)},
-  editor={Wenisch, Thomas and Agarwal, Neha},
-  pages={58--67},
-  year={2019},
-  organization={IEEE}
-}
-
-@article{wulf1995memory,
-author = {Wulf, Wm and McKee, Sally},
-year = {1996},
-month = {01},
-pages = {},
-title = {Hitting the Memory Wall: Implications of the Obvious},
-volume = {23},
-journal = {Computer Architecture News}
+@TECHREPORT{jin1999openmp,
+    author = {H. Jin and H. Jin and M. Frumkin and M. Frumkin and J. Yan and J. Yan},
+    title = {The OpenMP Implementation of NAS Parallel Benchmarks and its Performance},
+    institution={NAS System Division},
+    address = {NASA Ames Research Center},
+    year = {1999}
 }
 
 @inproceedings{girelli2019impacto,
@@ -107,22 +37,37 @@ journal = {Computer Architecture News}
   organization={SBC}
 }
 
-@article{bakhshalipour2019evaluation,
-  title={Evaluation of Hardware Data Prefetchers on Server Processors},
-  author={Bakhshalipour, Mohammad and Tabaeiaghdaei, Seyedali and Lotfi-Kamran, Pejman and Sarbazi-Azad, Hamid},
-  journal={ACM Computing Surveys (CSUR)},
-  volume={52},
-  number={3},
-  pages={52},
-  year={2019},
-  publisher={ACM}
+@article{sanchez2013zsim,
+author = {Sanchez, Daniel and Kozyrakis, Christos},
+title = {ZSim: Fast and Accurate Microarchitectural Simulation of Thousand-Core Systems},
+year = {2013},
+issue_date = {June 2013},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {41},
+number = {3},
+issn = {0163-5964},
+url = {https://doi.org/10.1145/2508148.2485963},
+doi = {10.1145/2508148.2485963},
+journal = {SIGARCH Comput. Archit. News},
+month = jun,
+pages = {475–486},
+numpages = {12}
 }
 
-@phdthesis{demme2014overcoming,
-  title={Overcoming the Intuition Wall: Measurement and Analysis in Computer Architecture},
-  author={Demme, John David},
-  year={2014},
-  school={Columbia University}
+@ARTICLE{carlson2014aeohmcm,
+  author = {Trevor E. Carlson and Wim Heirman and Stijn Eyerman and Ibrahim Hur
+        and Lieven Eeckhout},
+  title = {An Evaluation of High-Level Mechanistic Core Models},
+  journal = {ACM Transactions on Architecture and Code Optimization (TACO)},
+  year = {2014},
+  address = {New York, NY, USA},
+  articleno = {5},
+  doi = {10.1145/2629677},
+  issn = {1544-3566},
+  issue_date = {April 2014},
+  numpages = {23},
+  publisher = {ACM}
 }
 
 @inproceedings{bakhshalipour2019bingo,
@@ -133,6 +78,46 @@ journal = {Computer Architecture News}
   pages={399--411},
   year={2019},
   organization={IEEE}
+}
+
+@article{chen1995effective,
+  title={Effective hardware-based data prefetching for high-performance processors},
+  author={Chen, Tien-Fu and Baer, Jean-Loup},
+  journal={IEEE transactions on computers},
+  volume={44},
+  number={5},
+  pages={609--623},
+  year={1995},
+  publisher={IEEE}
+}
+
+@article{le2007ibm,
+  title={Ibm power6 microarchitecture},
+  author={Le, Hung Q and Starke, William J and Fields, J Stephen and O'Connell, Francis P and Nguyen, Dung Q and Ronchetti, Bruce J and Sauer, Wolfram M and Schwarz, Eric M and Vaden, Michael T},
+  journal={IBM Journal of Research and Development},
+  volume={51},
+  number={6},
+  pages={639--662},
+  year={2007},
+  publisher={IBM}
+}
+
+@misc{ZSim2016validation,
+  title={ZSim Tutorial Validation},
+  howpublished="\url{http://zsim.csail.mit.edu/tutorial/slides/validation.pdf}",
+  author={Sanchez, D.},
+  year={2016},
+  note = "[Accesed in: 10 Sept. 2019]"
+}
+
+@inproceedings{bienia2008parsec,
+  title={The PARSEC benchmark suite: Characterization and architectural implications},
+  author={Bienia, Christian and Kumar, Sanjeev and Singh, Jaswinder Pal and Li, Kai},
+  booktitle={Proceedings of the 17th international conference on Parallel architectures and compilation techniques},
+  pages={72--81},
+  editor={Moshovos, Andreas and Tarditi, David and Olukotun, Kunle},
+  year={2008},
+  organization={ACM}
 }
 
 @inproceedings{genbrugge2010interval,
@@ -147,6 +132,53 @@ doi = {10.1109/HPCA.2010.5416636},
 organization={IEEE}
 }
 
+@article{eyerman2009model,
+author = {Eyerman, Stijn and Eeckhout, Lieven and Karkhanis, Tejas and Smith, James E.},
+title = {A Mechanistic Performance Model for Superscalar Out-of-Order Processors},
+year = {2009},
+issue_date = {May 2009},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {27},
+number = {2},
+issn = {0734-2071},
+url = {https://doi.org/10.1145/1534909.1534910},
+doi = {10.1145/1534909.1534910},
+journal = {ACM Trans. Comput. Syst.},
+month = may,
+articleno = {Article 3},
+numpages = {37},
+keywords = {balanced processor design, mechanistic modeling, performance modeling, pipeline width, overprovisioned processor design, Superscalar out-of-order processor, wide front-end dispatch processors, analytical modeling, resource scaling, pipeline depth}
+}
+
+@article{woo1995splash,
+author = {Woo, Steven Cameron and Ohara, Moriyoshi and Torrie, Evan and Singh, Jaswinder Pal and Gupta, Anoop},
+title = {The SPLASH-2 Programs: Characterization and Methodological Considerations},
+year = {1995},
+issue_date = {May 1995},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {23},
+number = {2},
+issn = {0163-5964},
+url = {https://doi.org/10.1145/225830.223990},
+doi = {10.1145/225830.223990},
+journal = {SIGARCH Comput. Archit. News},
+month = may,
+pages = {24–36},
+numpages = {13}
+}
+
+@inproceedings{adileh2019racing,
+  title={Racing to Hardware-Validated Simulation},
+  author={Adileh, Almutaz and Gonz{\'a}lez-Alvarez, Cecilia and Ruiz, Juan Miguel De Haro and Eeckhout, Lieven},
+  booktitle={2019 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)},
+  editor={Wenisch, Thomas and Agarwal, Neha},
+  pages={58--67},
+  year={2019},
+  organization={IEEE}
+}
+
 @article{eeckhout2010computer,
   title={Computer architecture performance evaluation methods},
   author={Eeckhout, Lieven},
@@ -156,6 +188,14 @@ organization={IEEE}
   pages={1--145},
   year={2010},
   publisher={Morgan \& Claypool Publishers}
+}
+
+@article{fog2012microarchitecture,
+  title={The microarchitecture of Intel, AMD and VIA CPUs: An optimization guide for assembly programmers and compiler makers},
+  author={Fog, Agner},
+  journal={Copenhagen University College of Engineering},
+  pages={02--29},
+  year={2012}
 }
 
 @inproceedings{desikan2001measuring,
@@ -178,40 +218,124 @@ organization={IEEE}
   publisher={IEEE}
 }
 
+@inproceedings{walker2018hardware,
+  title={Hardware-validated CPU performance and energy modelling},
+  author={Walker, Matthew and Bischoff, Sascha and Diestelhorst, Stephan and Merrett, Geoff and Al-Hashimi, Bashir},
+  booktitle={2018 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)},
+  editor={Nikolopoulos, Dimitrios and Supinski, Bronis and Delimitrou, Christina},
+  pages={44--53},
+  year={2018},
+  organization={IEEE}
+}
+
+@inproceedings{gutierrez2014sources,
+  title={Sources of error in full-system simulation},
+  author={Gutierrez, Anthony and Pusdesris, Joseph and Dreslinski, Ronald G and Mudge, Trevor and Sudanthi, Chander and Emmons, Christopher D and Hayenga, Mitchell and Paver, Nigel},
+  booktitle={2014 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)},
+  editor={Aamodt, Tor and Hempstead, Mark},
+  pages={13--22},
+  year={2014},
+  organization={IEEE}
+}
+
+@article{mittal2016survey,
+  title={A survey of recent prefetching techniques for processor caches},
+  author={Mittal, Sparsh},
+  journal={ACM Computing Surveys (CSUR)},
+  volume={49},
+  number={2},
+  pages={1--35},
+  year={2016},
+  publisher={ACM New York, NY, USA}
+}
+
+@inproceedings{srinath2007feedback,
+  title={Feedback directed prefetching: Improving the performance and bandwidth-efficiency of hardware prefetchers},
+  author={Srinath, Santhosh and Mutlu, Onur and Kim, Hyesoon and Patt, Yale N},
+  booktitle={2007 IEEE 13th International Symposium on High Performance Computer Architecture},
+  editor={Louri, Ahmed and Yousif, Mazin and Byrd, Greg},
+  pages={63--74},
+  year={2007},
+  organization={IEEE}
+}
+
+@inproceedings{nesbit2004data,
+  title={Data cache prefetching using a global history buffer},
+  author={Nesbit, Kyle J and Smith, James E},
+  booktitle={10th International Symposium on High Performance Computer Architecture (HPCA'04)},
+  editor={Tirado, Francisco and Zapata, Emilio},
+  pages={96--96},
+  year={2004},
+  organization={IEEE}
+}
+
+@article{zhuang2006reducing,
+  title={Reducing cache pollution via dynamic data prefetch filtering},
+  author={Zhuang, Xiaotong and Hsien-Hsin, S Lee},
+  journal={IEEE Transactions on Computers},
+  volume={56},
+  number={1},
+  pages={18--31},
+  year={2006},
+  publisher={IEEE}
+}
+
+@inproceedings{lee2008prefetcher,
+  title={Prefetch-aware DRAM controllers},
+  author={Lee, Chang Joo and Mutlu, Onur and Narasiman, Veynu and Patt, Yale N},
+  booktitle={Proceedings of the 41st Annual IEEE/ACM international Symposium on Microarchitecture},
+  editor={Gonzalez, Antonio and Silvano, Cristina and Monchiero, Matteo and Galuzzi, Carlo},
+  pages={200--209},
+  year={2008},
+  organization={IEEE Computer Society}
+}
+
+@inproceedings{ebrahimi2009coordinated,
+  title={Coordinated control of multiple prefetchers in multi-core systems},
+  author={Ebrahimi, Eiman and Mutlu, Onur and Lee, Chang Joo and Patt, Yale N},
+  booktitle={Proceedings of the 42nd Annual IEEE/ACM International Symposium on Microarchitecture},
+  editor={Albonesi, David and Martonosi, Margaret and August, David and Martinez, Jose},
+  pages={316--326},
+  year={2009},
+  organization={IEEE}
+}
+
+@inproceedings{jain2018rethinking,
+  title={Rethinking belady's algorithm to accommodate prefetching},
+  author={Jain, Akanksha and Lin, Calvin},
+  booktitle={2018 ACM/IEEE 45th Annual International Symposium on Computer Architecture (ISCA)},
+  editor={Bilof, Randall},
+  pages={110--123},
+  year={2018},
+  organization={IEEE}
+}
+
+@inproceedings{wu2019efficient,
+  title={Efficient metadata management for irregular data prefetching},
+  author={Wu, Hao and Nathella, Krishnendra and Sunwoo, Dam and Jain, Akanksha and Lin, Calvin},
+  booktitle={Proceedings of the 46th International Symposium on Computer Architecture},
+  editor={Manne, Srilatha and  Hunter, Hillery and Altman, Erik},
+  pages={449--461},
+  year={2019},
+  organization={ACM}
+}
+
+@inproceedings{bhatia2019perceptron,
+  title={Perceptron-based prefetch filtering},
+  author={Bhatia, Eshan and Chacon, Gino and Pugsley, Seth and Teran, Elvira and Gratz, Paul V and Jim{\'e}nez, Daniel A},
+  booktitle={Proceedings of the 46th International Symposium on Computer Architecture},
+  editor={Manne, Srilatha and  Hunter, Hillery and Altman, Erik},
+  pages={1--13},
+  year={2019},
+  organization={ACM}
+}
+
 @article{akram2019survey,
   title={A Survey of Computer Architecture Simulation Techniques and Tools},
   author={Akram, Ayaz and Sawalha, Lina},
   journal={IEEE Access},
   year={2019},
   publisher={IEEE}
-}
-
-@article{sanchez2013zsim,
-author = {Sanchez, Daniel and Kozyrakis, Christos},
-title = {ZSim: Fast and Accurate Microarchitectural Simulation of Thousand-Core Systems},
-year = {2013},
-issue_date = {June 2013},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {41},
-number = {3},
-issn = {0163-5964},
-url = {https://doi.org/10.1145/2508148.2485963},
-doi = {10.1145/2508148.2485963},
-journal = {SIGARCH Comput. Archit. News},
-month = jun,
-pages = {475–486},
-numpages = {12}
-}
-
-@inproceedings{alves2015sinuca,
-  title={Sinuca: A validated micro-architecture simulator},
-  author={Alves, Marco Antonio Zanata and Villavieja, Carlos and Diener, Matthias and Moreira, Francis Birck and Navaux, Philippe Olivier Alexandre},
-  booktitle={2015 IEEE 17th International Conference on High Performance Computing and Communications},
-  editor={Qiu, Meikang},
-  pages={605--610},
-  year={2015},
-  organization={IEEE}
 }
 
 @article{binkert2011gem5,
@@ -223,31 +347,6 @@ numpages = {12}
   pages={1--7},
   year={2011},
   publisher={ACM}
-}
-
-@ARTICLE{carlson2014aeohmcm,
-  author = {Trevor E. Carlson and Wim Heirman and Stijn Eyerman and Ibrahim Hur
-        and Lieven Eeckhout},
-  title = {An Evaluation of High-Level Mechanistic Core Models},
-  journal = {ACM Transactions on Architecture and Code Optimization (TACO)},
-  year = {2014},
-  address = {New York, NY, USA},
-  articleno = {5},
-  doi = {10.1145/2629677},
-  issn = {1544-3566},
-  issue_date = {April 2014},
-  numpages = {23},
-  publisher = {ACM}
-}
-
-@inproceedings{carlson2011sniper,
-  title={Sniper: Exploring the level of abstraction for scalable and accurate parallel multi-core simulation},
-  author={Carlson, Trevor E and Heirmant, Wim and Eeckhout, Lieven},
-  booktitle={SC'11: Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis},
-  editor={Lathrop, Scott and Costa, Jim and Kramer, William},
-  pages={1--12},
-  year={2011},
-  organization={IEEE}
 }
 
 @inproceedings{ubal2012multi2sim,
@@ -280,14 +379,6 @@ numpages = {12}
   organization={IEEE}
 }
 
-@article{fog2012microarchitecture,
-  title={The microarchitecture of Intel, AMD and VIA CPUs: An optimization guide for assembly programmers and compiler makers},
-  author={Fog, Agner},
-  journal={Copenhagen University College of Engineering},
-  pages={02--29},
-  year={2012}
-}
-
 @article{hammarlund2014haswell,
   title={Haswell: The fourth-generation intel core processor},
   author={Hammarlund, Per and Martinez, Alberto J and Bajwa, Atiq A and Hill, David L and Hallnor, Erik and Jiang, Hong and Dixon, Martin and Derr, Michael and Hunsaker, Mikal and Kumar, Rajesh and others},
@@ -299,202 +390,12 @@ numpages = {12}
   publisher={IEEE}
 }
 
-
-@TECHREPORT{jin1999openmp,
-    author = {H. Jin and H. Jin and M. Frumkin and M. Frumkin and J. Yan and J. Yan},
-    title = {The OpenMP Implementation of NAS Parallel Benchmarks and its Performance},
-    institution={NAS System Division},
-    address = {NASA Ames Research Center},
-    year = {1999}
-}
-
-@inproceedings{bienia2008parsec,
-  title={The PARSEC benchmark suite: Characterization and architectural implications},
-  author={Bienia, Christian and Kumar, Sanjeev and Singh, Jaswinder Pal and Li, Kai},
-  booktitle={Proceedings of the 17th international conference on Parallel architectures and compilation techniques},
-  pages={72--81},
-  editor={Moshovos, Andreas and Tarditi, David and Olukotun, Kunle},
-  year={2008},
-  organization={ACM}
-}
-
-@inproceedings{james2012intel,
-  title={Intel Ivy Bridge unveiled—The first commercial tri-gate, high-k, metal-gate CPU},
-  author={James, Dick},
-  booktitle={Proceedings of the IEEE 2012 Custom Integrated Circuits Conference},
-  pages={1--4},
-  editor={Andre, Tom},
-  year={2012},
-  organization={IEEE}
-}
-
-@article{10.1145/635506.605427,
-author = {Cooksey, Robert and Jourdan, Stephan and Grunwald, Dirk},
-title = {A Stateless, Content-Directed Data Prefetching Mechanism},
-year = {2002},
-issue_date = {December 2002},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {30},
-number = {5},
-issn = {0163-5964},
-url = {https://doi.org/10.1145/635506.605427},
-doi = {10.1145/635506.605427},
-journal = {SIGARCH Comput. Archit. News},
-month = oct,
-pages = {279–290},
-numpages = {12}
-}
-
-@article{10.1145/384286.264207,
-author = {Joseph, Doug and Grunwald, Dirk},
-title = {Prefetching Using Markov Predictors},
-year = {1997},
-issue_date = {May 1997},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {25},
-number = {2},
-issn = {0163-5964},
-url = {https://doi.org/10.1145/384286.264207},
-doi = {10.1145/384286.264207},
-journal = {SIGARCH Comput. Archit. News},
-month = may,
-pages = {252–263},
-numpages = {12}
-}
-
-@inproceedings{nesbit2004data,
-  title={Data cache prefetching using a global history buffer},
-  author={Nesbit, Kyle J and Smith, James E},
-  booktitle={10th International Symposium on High Performance Computer Architecture (HPCA'04)},
-  editor={Tirado, Francisco and Zapata, Emilio},
-  pages={96--96},
-  year={2004},
-  organization={IEEE}
-}
-
-@article{chen1995effective,
-  title={Effective hardware-based data prefetching for high-performance processors},
-  author={Chen, Tien-Fu and Baer, Jean-Loup},
-  journal={IEEE transactions on computers},
-  volume={44},
-  number={5},
-  pages={609--623},
-  year={1995},
-  publisher={IEEE}
-}
-
-@article{le2007ibm,
-  title={Ibm power6 microarchitecture},
-  author={Le, Hung Q and Starke, William J and Fields, J Stephen and O'Connell, Francis P and Nguyen, Dung Q and Ronchetti, Bruce J and Sauer, Wolfram M and Schwarz, Eric M and Vaden, Michael T},
-  journal={IBM Journal of Research and Development},
-  volume={51},
-  number={6},
-  pages={639--662},
-  year={2007},
-  publisher={IBM}
-}
-
-@article{lomont2011introduction,
-  title={Introduction to intel advanced vector extensions},
-  author={Lomont, Chris},
-  journal={Intel White Paper},
-  pages={1--21},
-  year={2011}
-}
-
-@inproceedings{lee2008prefetcher,
-  title={Prefetch-aware DRAM controllers},
-  author={Lee, Chang Joo and Mutlu, Onur and Narasiman, Veynu and Patt, Yale N},
-  booktitle={Proceedings of the 41st Annual IEEE/ACM international Symposium on Microarchitecture},
-  editor={Gonzalez, Antonio and Silvano, Cristina and Monchiero, Matteo and Galuzzi, Carlo},
-  pages={200--209},
-  year={2008},
-  organization={IEEE Computer Society}
-}
-
-@inproceedings{jain2018rethinking,
-  title={Rethinking belady's algorithm to accommodate prefetching},
-  author={Jain, Akanksha and Lin, Calvin},
-  booktitle={2018 ACM/IEEE 45th Annual International Symposium on Computer Architecture (ISCA)},
-  editor={Bilof, Randall},
-  pages={110--123},
-  year={2018},
-  organization={IEEE}
-}
-
-@article{eyerman2009model,
-author = {Eyerman, Stijn and Eeckhout, Lieven and Karkhanis, Tejas and Smith, James E.},
-title = {A Mechanistic Performance Model for Superscalar Out-of-Order Processors},
-year = {2009},
-issue_date = {May 2009},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {27},
-number = {2},
-issn = {0734-2071},
-url = {https://doi.org/10.1145/1534909.1534910},
-doi = {10.1145/1534909.1534910},
-journal = {ACM Trans. Comput. Syst.},
-month = may,
-articleno = {Article 3},
-numpages = {37},
-keywords = {balanced processor design, mechanistic modeling, performance modeling, pipeline width, overprovisioned processor design, Superscalar out-of-order processor, wide front-end dispatch processors, analytical modeling, resource scaling, pipeline depth}
-}
-  
-
-@inproceedings{10.1145/223982.223990,
-author = {Woo, Steven Cameron and Ohara, Moriyoshi and Torrie, Evan and Singh, Jaswinder Pal and Gupta, Anoop},
-title = {The SPLASH-2 Programs: Characterization and Methodological Considerations},
-year = {1995},
-isbn = {0897916980},
-editor={Patterson, David},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/223982.223990},
-doi = {10.1145/223982.223990},
-booktitle = {Proceedings of the 22nd Annual International Symposium on Computer Architecture},
-pages = {24–36},
-numpages = {13},
-location = {S. Margherita Ligure, Italy},
-series = {ISCA ’95}
-}
-
-@article{desikanerrata,
-author = {Desikan, Rajagopalan and Burger, Doug and Keckler, Stephen W. and Cruz, Llorenc and Latorre, Fernando and Gonz\'{a}lez, Antonio and Valero, Mateo},
-title = {Errata on “Measuring Experimental Error in Microprocessor Simulation”},
-year = {2002},
-issue_date = {March 2002},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {30},
-number = {1},
-issn = {0163-5964},
-url = {https://doi.org/10.1145/511120.511122},
-doi = {10.1145/511120.511122},
-journal = {SIGARCH Comput. Archit. News},
-month = mar,
-pages = {2–4},
-numpages = {3}
-}
-
-@article{woo1995splash,
-author = {Woo, Steven Cameron and Ohara, Moriyoshi and Torrie, Evan and Singh, Jaswinder Pal and Gupta, Anoop},
-title = {The SPLASH-2 Programs: Characterization and Methodological Considerations},
-year = {1995},
-issue_date = {May 1995},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {23},
-number = {2},
-issn = {0163-5964},
-url = {https://doi.org/10.1145/225830.223990},
-doi = {10.1145/225830.223990},
-journal = {SIGARCH Comput. Archit. News},
-month = may,
-pages = {24–36},
-numpages = {13}
+@incollection{terpstra2010papi,
+  title={Collecting performance data with PAPI-C},
+  author={Terpstra, Dan and Jagode, Heike and You, Haihang and Dongarra, Jack},
+  pages={157--173},
+  year={2010},
+  publisher={Tools for High Performance Computing. Springer}
 }
 
 @ARTICLE{doweck2017skylake,
@@ -515,71 +416,6 @@ pages = {52–62},
 numpages = {11}
 }
 
-%%special list
-@article{mittal2016survey,
-  title={A survey of recent prefetching techniques for processor caches},
-  author={Mittal, Sparsh},
-  journal={ACM Computing Surveys (CSUR)},
-  volume={49},
-  number={2},
-  pages={1--35},
-  year={2016},
-  publisher={ACM New York, NY, USA}
-}
-
-@inproceedings{ebrahimi2009coordinated,
-  title={Coordinated control of multiple prefetchers in multi-core systems},
-  author={Ebrahimi, Eiman and Mutlu, Onur and Lee, Chang Joo and Patt, Yale N},
-  booktitle={Proceedings of the 42nd Annual IEEE/ACM International Symposium on Microarchitecture},
-  editor={Albonesi, David and Martonosi, Margaret and August, David and Martinez, Jose},
-  pages={316--326},
-  year={2009},
-  organization={IEEE}
-}
-
-@article{zhuang2006reducing,
-  title={Reducing cache pollution via dynamic data prefetch filtering},
-  author={Zhuang, Xiaotong and Hsien-Hsin, S Lee},
-  journal={IEEE Transactions on Computers},
-  volume={56},
-  number={1},
-  pages={18--31},
-  year={2006},
-  publisher={IEEE}
-}
-
-@inproceedings{srinath2007feedback,
-  title={Feedback directed prefetching: Improving the performance and bandwidth-efficiency of hardware prefetchers},
-  author={Srinath, Santhosh and Mutlu, Onur and Kim, Hyesoon and Patt, Yale N},
-  booktitle={2007 IEEE 13th International Symposium on High Performance Computer Architecture},
-  editor={Louri, Ahmed and Yousif, Mazin and Byrd, Greg},
-  pages={63--74},
-  year={2007},
-  organization={IEEE}
-}
-
-@inproceedings{bhatia2019perceptron,
-  title={Perceptron-based prefetch filtering},
-  author={Bhatia, Eshan and Chacon, Gino and Pugsley, Seth and Teran, Elvira and Gratz, Paul V and Jim{\'e}nez, Daniel A},
-  booktitle={Proceedings of the 46th International Symposium on Computer Architecture},
-  editor={Manne, Srilatha and  Hunter, Hillery and Altman, Erik},
-  pages={1--13},
-  year={2019},
-  organization={ACM}
-}
-
-@inproceedings{wu2019efficient,
-  title={Efficient metadata management for irregular data prefetching},
-  author={Wu, Hao and Nathella, Krishnendra and Sunwoo, Dam and Jain, Akanksha and Lin, Calvin},
-  booktitle={Proceedings of the 46th International Symposium on Computer Architecture},
-  editor={Manne, Srilatha and  Hunter, Hillery and Altman, Erik},
-  pages={449--461},
-  year={2019},
-  organization={ACM}
-}
-
-%%%%%%%%% NOVAS REF AQUI %%%%%%%%%
-
 @ARTICLE{rotem2012turbo,  
 author={E. {Rotem} and A. {Naveh} and A. {Ananthakrishnan} and E. {Weissmann} and D. {Rajwan}},  
 journal={IEEE Micro},   
@@ -590,35 +426,57 @@ number={2},
 pages={20-27},  
 doi={10.1109/MM.2012.12}}
 
-
-@inproceedings{marques2019turbo,
-author = {Vila Nova Marques, Sandro Matheus and Medeiros, Thiarles and Rossi, Fábio and Caggiani Luizelli, Marcelo and Girardi, Alessandro and Beck, Antonio and Lorenzon, Arthur},
-year = {2019},
-month = {10},
-pages = {149-154},
-title = {The Impact of Turbo Frequency on the Energy, Performance, and Aging of Parallel Applications},
-doi = {10.1109/VLSI-SoC.2019.8920389}
+@inproceedings{carlson2011sniper,
+  title={Sniper: Exploring the level of abstraction for scalable and accurate parallel multi-core simulation},
+  author={Carlson, Trevor E and Heirmant, Wim and Eeckhout, Lieven},
+  booktitle={SC'11: Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis},
+  editor={Lathrop, Scott and Costa, Jim and Kramer, William},
+  pages={1--12},
+  year={2011},
+  organization={IEEE}
 }
 
-@InProceedings{terpstra2010papi,
-author="Terpstra, Dan
-and Jagode, Heike
-and You, Haihang
-and Dongarra, Jack",
-editor="M{\"u}ller, Matthias S.
-and Resch, Michael M.
-and Schulz, Alexander
-and Nagel, Wolfgang E.",
-title="Collecting Performance Data with PAPI-C",
-booktitle="Tools for High Performance Computing 2009",
-year="2010",
-publisher="Springer Berlin Heidelberg",
-address="Berlin, Heidelberg",
-pages="157--173",
-isbn="978-3-642-11261-4"
+@misc{intelmanual,
+    title={Intel® 64 and IA-32 Architectures Optimization Reference Manual},
+    author={Intel},
+    howpublished={\url{https://software.intel.com/sites/default/files/managed/9e/bc/64-ia-32-architectures-optimization-manual.pdf}},
+    year={2019},
+    note = "[Accesed in: 16 Jan. 2020]"
 }
 
-% deixei aqui pra não perder a citação no texto, mas depois tirar
+@misc{charney1995GeneralizedCB,
+  title={Generalized correlation based hardware prefetching},
+  author={Mark J. Charney and Anthony P. Reeves},
+  year={1995},
+  howpublished={\url{https://www.semanticscholar.org/paper/Generalized-correlation-based-hardware-prefetching-Charney-Reeves/86b3c8787a63f4d1d30ff53ac115cbd8881a7af7}},
+  note = "[Accesed in: 18 Apr. 2020]"
+}
+
+@inproceedings{alves2015sinuca,
+  title={Sinuca: A validated micro-architecture simulator},
+  author={Alves, Marco Antonio Zanata and Villavieja, Carlos and Diener, Matthias and Moreira, Francis Birck and Navaux, Philippe Olivier Alexandre},
+  booktitle={2015 IEEE 17th International Conference on High Performance Computing and Communications},
+  editor={Qiu, Meikang},
+  pages={605--610},
+  year={2015},
+  organization={IEEE}
+}
+
+@book{cruz2018thread,
+  title={Thread and Data Mapping for Multicore Systems: Improving Communication and Memory Accesses},
+  author={Cruz, Eduardo HM and Diener, Matthias and Navaux, Philippe OA},
+  year={2018},
+  publisher={Springer}
+}
+
+@misc{SAPguide,
+    title={Dell SAP NetWeaver Benchmark Info},
+    author={Dell},
+    howpublished={\url{https://www.dell.com/downloads/global/solutions/Dell_SAP_NetWeaver_Benchmark_Info.pdf}},
+    year={2006},
+    note = "[Accesed in: 24 Mar. 2020]"
+}
+
 @inproceedings{de2010new,
 author = {de Melo, Arnaldo Carvalho},
 booktitle = {International Linux System Technology Conference},
@@ -628,19 +486,6 @@ year = {2010},
 pages = {1--42},
 organization={Linux Foundation}
 }
-
-@inproceedings{lo2014turbo,
-author = {Lo, David and Kozyrakis, Christos},
-year = {2014},
-month = {02},
-pages = {603-613},
-title = {Dynamic management of TurboMode in modern multi-core chips},
-isbn = {978-1-4799-3097-5},
-journal = {Proceedings - International Symposium on High-Performance Computer Architecture},
-doi = {10.1109/HPCA.2014.6835969}
-}
-
-%%%%%%%%% NOVAS REF AQUI %%%%%%%%%
 
 @ARTICLE{gonzalez1996edp,
 author={R. {Gonzalez} and M. {Horowitz}},
