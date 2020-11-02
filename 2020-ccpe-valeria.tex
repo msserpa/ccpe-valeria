@@ -4,7 +4,7 @@
 \usepackage{comment}
 \usepackage{subfigure}
 \articletype{Research Article}
-\received{20 April, 2020}
+\received{2 November, 2020}
 \revised{TBD}
 \accepted{TBD}
 
@@ -28,7 +28,7 @@
 \author{Philippe O. A. Navaux}
 
 \address{
-  \orgdiv{Informatics Institute},%navaux prefere sem o of...
+  \orgdiv{Informatics Institute},
   \orgname{Federal University of Rio Grande do Sul -- UFRGS},
   \orgaddress{\city{Porto Alegre}, \country{Brazil}}}
 
@@ -38,27 +38,11 @@
 
 
 \abstract[Summary]{
-%%%% 177 WORD ABSTRACT%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Memory prefetcher algorithms are widely used in processors to mitigate the performance gap between the processors and the memory subsystem. 
 The complexities behind the architectures and prefetcher algorithms, however, not only hinder the development of accurate architecture simulators, but also hinder understanding the prefetcher's contribution to performance, on both a real hardware and in a simulated environment.
-%Analyzing and developing new prefetcher algorithms is possible thanks to architecture simulators that model the highly complex interactions present in the hardware. When we account for parallel, High-Performance Computing (HPC) applications, understanding the prefetcher's contribution to performance, on both the real hardware and in the simulations, becomes challenging. 
 In this paper, we contribute to shed light the memory prefetcher's role in the performance of parallel HPC applications, considering the prefetcher algorithms offered by both the real hardware and the simulators. 
 \new{We performed a careful experimental investigation}, executing the NAS parallel benchmark (NPB) on a real Skylake machine, and as well in a simulated environment with the ZSim and Sniper simulators, taking into account the prefetcher algorithms offered by both Skylake and the simulators. 
-%In this paper, we provide a better understanding of the memory prefetcher's role in the performance of HPC applications, considering the prefetcher algorithms offered by both the real hardware and the simulators. We performed a careful experimental campaign, executing the NAS parallel benchmark (NPB) on a real Skylake machine, and as well in a simulated environment with the ZSim and Sniper simulators, taking into account the prefetcher algorithms offered by both Skylake and the simulators. 
-Our experimental results show that: (i) prefetching from the L3 to L2 cache presents better performance gains, (ii) the memory contention in the parallel execution constrains the prefetcher's effect, (iii) Skylake's parallel memory contention is poorly simulated by ZSim and Sniper, and (iv) Skylake's non-inclusive L3 cache hinders the accurate simulation of NPB with the Sniper's prefetchers.%\ms{deixar claro as contribuicoes aqui, na intro e na conclusao dcs: feito}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%% 209 WORD ABSTRACT%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Memory prefetcher algorithms have been widely used in processors to mitigate the performance gap between the processors and the memory subsystem. Analyzing and developing new prefetcher algorithms is mainly possible thanks to architecture simulators that model the highly complex interactions present in the hardware. When we account for parallel, High-Performance Computing (HPC) applications, understanding the prefetcher's contribution to performance, on both the real hardware and in the simulations, becomes challenging. 
-%In this paper, we provide a better understanding of the memory prefetcher's role in the performance of HPC applications, considering the prefetcher algorithms present in the real hardware and the ones present in simulators. For this task, we performed a careful experimental campaign, executing the NAS parallel benchmark (NPB) on a real Skylake machine, and as well in a simulated environment with the ZSim and Sniper simulators, taking into account all prefetcher algorithms offered by both Skylake and the simulators. 
-%The highlights of our experimental results are: (i) prefetching from the L3 to L2 cache presents better performance gains, (ii) the memory contention in the parallel execution constrains the prefetcher's effect, (iii) Skylake's parallel memory contention is poorly simulated by ZSim and Sniper, and (iv) Skylake's non-inclusive L3 cache hinders the accurate simulation of NPB with the Sniper's prefetchers.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Memory prefetcher algorithms have been widely used in processors to mitigate the performance gap between the processors and the memory subsystem. Analyzing and developing new prefetcher algorithms is mainly feasible thanks to architecture simulators, that model the highly complex interactions present in the hardware. When we account parallel, High Performance Computing (HPC) applications, understanding the prefetcher's contribution to performance, on both the real hardware and in the simulations, becomes challenging. 
-%In this paper we provide a better understanding about the memory prefetcher's role in the performance of HPC applications, accounting the prefetcher algorithms present in the real hardware and the ones present in simulators. For this task we performed a careful experimental campaign executing the Numerical Aerodynamic Simulation Parallel Benchmark (NPB) in a real Skylake machine, and as well in a simulated environment with the ZSim and Sniper simulators, taking into account all prefetcher algorithms offered by both Skylake and the simulators. 
-%Our experimental results show that (i) prefetching from the L3 to L2 cache presents a more substantial contribution to performance, (ii) memory contention becomes a larger constraint in the performance as the level of parallelism increases, limiting the prefetcher's contribution, (iii) Skylake's memory contention behavior is poorly simulated by ZSim and Sniper, and (iv) the Skylake's non-inclusive L3 cache and the concealment behind its prefetcher algorithms hinders accuretely simulating HPC applications with Sniper and its prefetchers.
+Our experimental results show that: (i) prefetching from the L3 to L2 cache presents better performance gains, (ii) the memory contention in the parallel execution constrains the prefetcher's effect, (iii) Skylake's parallel memory contention is poorly simulated by ZSim and Sniper, and (iv) Skylake's non-inclusive L3 cache hinders the accurate simulation of NPB with the Sniper's prefetchers.
 }
 
 \keywords{
@@ -74,18 +58,14 @@ architecture simulation
 \author{M. S. Serpa},
 \author{D. Carastan-Santos}, and
 \author{P. O. A. Navaux}} (\cyear{2020}),
-%\ctitle{Understanding Memory Prefetcher Performance over Parallel Applications: From Real to Simulated},
 \ctitle{Investigating Memory Prefetcher Performance over Parallel Applications: From Real to Simulated},\cjournal{Concurrency and Computation: Practice and Experience}, \cvol{TBD}.}
 
 \maketitle
 
 \section{Introduction}\label{sec:introduction}
 
-%=============== INTRODUCTION 100 GRAMMARLY SCORE!================================================
-In recent years, there have been significant advances in the performance of processors, exemplified by the reduction of transistor size and the increase in the number of cores in a processor. %~\fbm{requires citation. processor freq increases in recent years? I'm doubtful}. 
-%However, the amount of data required by the processors to operate efficiently steadily increased as well~\fbm{the less data the better, actually. this sentence doesn't make sense, rather, the demand for data to be processed has increased, and while the processor core design has kept up, the memory hierarchy did not}. 
+In recent years, there have been significant advances in the performance of processors, exemplified by the reduction of transistor size and the increase in the number of cores in a processor.
 Conversely, the memory subsystem did not advance as significantly as processors, not being able to deliver data at the required rate. 
-%In this regard, the memory system did not advance as significantly as processors, not being able to deliver data at the required rate. 
 This problem is referred to in the literature as the memory wall~\cite{wulf1995memory}.
 For this reason, there is a keen effort in computer architecture research to overcome these memory limitations. 
 An example of a technology used to mitigate the memory latency is the prefetcher, a technique that identifies access patterns from each core, creates speculative memory requests, and fetches data -- that can be potentially useful -- to the cache beforehand.
@@ -98,17 +78,14 @@ The hindrance lies, therefore, in understanding how the prefetcher affects the p
 To further complicate the matter, in computer architecture research, physical implementation and analysis are infeasible due to the high complexity and manufacturing costs. 
 Consequently, architecture simulators are considered the primary mechanism to implement and evaluate new ideas~\cite{skadron2003challenges}, such as new prefetcher algorithms. 
 To develop and analyze new ideas that attenuate problems arising from the inherent parallelism of HPC systems, we need multicore architecture simulators that support parallel workloads and accurately simulate interaction between cores.
-%\sout{Studies about the memory hierarchy in HPC systems require parallel architecture simulators that consider the interactions that occur among the different cores.} %\fbm{the phrase above, this one, and the following one sound redundant. Remove one?}
-%Parallel simulators must, therefore, provide an accurate implementation of memory access interactions and ensure data consistency through the memory hierarchy, such as cache line content~\cite{cooksey2002stateless}, register values~\cite{nesbit2004data}, and physical addresses~\cite{chen1995effective}.
 
 In this work, we seek to shed light on the following questions: \textit{(i) how does the prefetcher affect the processing performance of parallel, HPC applications?}, and \textit{(ii) how can state-of-the-art architecture simulators accurately simulate HPC applications, with and without prefetcher?}
 
-More specifically, this work presents the following set of contributions: % \ms{tambem pode ser escrito em texto sem itens aqui e deixar os itens para o proximo paragrafo}
+More specifically, this work presents the following set of contributions:
 \begin{itemize}
-    \item We developed a careful experimental investigation, executing the Numerical Aerodynamic Simulation Parallel Benchmark (NPB)~\cite{jin1999openmp} %using different levels of parallelism 
+    \item We developed a careful experimental investigation, executing the Numerical Aerodynamic Simulation Parallel Benchmark (NPB)~\cite{jin1999openmp};
     in an Intel Skylake machine and architecture simulations in the ZSim and Sniper simulators; 
     \item We show experimental evidence that an L2 memory prefetcher is more efficient in comparison with an L1 prefetcher, since avoiding excessive L3 cache accesses better contributes to performance, when comparing to accessing the L2 cache;
-    %\item We performed a holistic analysis of the NPB execution performance on both real and simulated scenarios, taking into account many many prefetcher algorithms offered in Skylake and in the Sniper simulator;
     \item We show evidence that the prefetchers' contribution to performance is limited by the level of parallelism of the application, mainly due to the increase in communication and memory contention as the level of parallelism increases;
     \item The Skylake and NPB simulation with ZSim and Sniper had poor accuracy in predicting the NPB applications performance, with and without simulating prefetcher algorithms, mainly due distinctions of the models and prefetcher algorithms present in ZSim and Sniper when compared to Skylake.
 \end{itemize}
@@ -130,89 +107,11 @@ In Sections~\ref{sec:real_ipc} and~\ref{sec:simulation}, we present the experime
 In Section~\ref{sec:insights} we propose a discussion regarding the prefetcher, good practices and guidelines, and in Section~\ref{sec:conclusion}, we give our concluding remarks, and we discuss future research directions.
 
 We follow a reproducible and open methodology in our investigation. A companion material of this work is publicly available at \COMPANION containing the application code, the data analysis code, and all data collected during experiments that culminated in this paper.
-  
-%=============== INTRODUCTION 100 GRAMMARLY SCORE!================================================
-
-%=============== PRE GRAMMARLY INTRODUCTION ======================================================
-\begin{comment}
-In recent years, there has been significant advances in the performance of processors, exemplified by the increase of processors operating frequency and the increase in the number of cores in a processor.
-%In recent years there has been significant advances in the performance of processors, exemplified by the increase in the frequency of operation and the number of cores.
-However, the amount of data required by the processors in order to operate efficiently steadily increased as well. 
-In this regard, the memory system did not advance as significantly as processors, not being able to deliver data at the required rate. This problem is referred in the literature as the memory wall~\cite{wulf1995memory}
-%However, these advances make more and more data necessary for the effective use of the processor pipeline.
-%The memory system, on the other hand, did not evolve as significantly as processors, not being able to deliver data at the required rate.
-%Such a problem is known as the memory wall \cite{wulf1995memory}.
-For this reason, there is a keen effort in computer architecture research to overcome these memory limitations.
-%For this reason, there is an intense study in computer architecture to overcome these limitations.
-An example of a technology used to mitigate the memory latency is the prefetcher, which is a technique that identifies access patterns from each core and creates speculative memory requests, and storing data -- that can be potentially usefull -- in the cache beforehand.
-%
-
-In High-Performance Computing (HPC) systems, there are many other problems besides those inherent to the processors and memory individually. HPC applications are highly parallel, with many threads communicating with themselves, mainly through shared memory. For instance, (i) several threads access the same memory addresses, making necessary to keep data coherence in the several cache levels, and (ii) the memory interactions among different threads may also unpredictably change the data path through the memory hierarchy. When accounting the memory hierarchy complexity of HPC systems along with the action of the prefetcher, the behavior of the processor's memory system receives a new level of complexity. The hindrance lies therefore in understanding how the prefetcher affects the processing performance of parallel, HPC applications.
-
-To further complicate the matter, in computer architecture research, physical implementation and analysis are infeasible due to the high complexity and manufacturing costs. 
-Consequently, architecture simulators are considered the primary mechanism to implement and evaluate a new ideas, such as new prefetcher algorithms~\cite{skadron2003challenges}.
-%Consequently, architecture simulators are considered the primary mechanism to implement and evaluate a new idea in this research field~\cite{skadron2003challenges}.
-%In High-Performance Computing (HPC) systems, there are many other problems besides those inherent to the architecture.
-To develop and analyze new ideas that attenuate problems arising from the inherent parallelism of HPC systems, we need multicore architecture simulators that support parallel workloads.
-%To develop and analyze new ideas that attenuate problems arising from parallelism, we need multicore architecture simulators that support parallel workloads.
-Studies about the memory hierarchy in HPC systems require parallel architecture simulators that consider the interactions that occur among the different cores.
-%When we consider studies over the memory hierarchy in multicore and manycore systems, parallel architecture simulators must consider the interactions that occur among the different cores.
-%For example, systems with dozens of cores point out problems as the interference among the different threads and the communication costs among them.
-%An example of core interaction is the communication between threads, which occur mainly through shared memory, where several threads access the same memory addresses, making necessary to keep data coherence in the several cache levels.
-Thereby, parallel simulators must provide an accurate implementation of memory access interactions and ensure data consistency through the memory hierarchy, such as cache line content~\cite{cooksey2002stateless}, register values~\cite{nesbit2004data} and physical addresses~\cite{chen1995effective}.
-%Therefore, when we consider the memory hierarchy complexity in multicore systems along with the action of the prefetcher, the behavior of the processor's memory system receives a new level of complexity. 
-%Parallel architecture simulations must consider information previously discarded, like cache line content~\cite{cooksey2002stateless}, register values~\cite{nesbit2004data} or physical addresses~\cite{chen1995effective}.
-%Moreover, the interactions among different cores generated by prefetch requests also may change the path of the data through the memory hierarchy.
-\end{comment}
-%============================================================================================================
-
-%For this reason, in this study we seek to understand how the prefetcher behaves in parallel architectures and how parallel architecture simulators are modeling this behavior. 
-
-%We evaluate prefetcher characteristics of a real machine, such as their impact on performance, accuracy, and relationship to thread scaling.
-%As simulators are largely used in computer architecture research, we also evaluate how a prefetcher implementation (or the lack of it) can impact in the accuracy of a parallel application simulation.
-%In doing so, we seek to analyze the communication aspects of these applications and the relationship of these aspects with the prefetcher behavior.
-%\fbm{sounds a bit ambitions, I just translated it, can anyone tone it down a bit?}
-
-%comparou prefetcher real L1-L2, none vs zsim
-
-%metricas: ciclos, time, l1 demand access, llc demand access
-
-%1 - 8 threads , Ivy Bridge
-
-%-----
-
-%real L1, real L2, sniper
-
-%métricas: novas métricas mais precisas / profunda etc
-
-%1 - 12 threads skylake -- cache não inclusiva
-
-
-%In this article, we DD. The contributions of this article are:\ms{valeria completa aqui}
-
-%\begin{itemize}
-%	\item J
-%
-%	\item Q
-%
-%	\item K
-%
-%	\item A
-%\end{itemize}
-
-%This article is an extension of our previous work \cite{girelli2019impacto} published in the WSCAD 2019 conference. The changes include XX\ms{valeria completa aqui}. YY and ZZ.
-
-%Section~\ref{sec:related}. Section~\ref{sec:definitions}. Section~\ref{sec:results}. Section~\ref{sec:insights}. Section~\ref{sec:conclusion}.
-
-%We follow a reproducible and open methodology in our investigation. A companion material of this work is publicly available at \COMPANION containing the application code, the data analysis code, and all data collected during experiments that culminated in this manuscript.
-
-
 
 \section{Background}\label{sec:definitions}
 
-%In this section, we present a discussion about the prefetcher behavior, its functionality, and provide an example.
-%Moreover, we present the simulators used in this article, exploring some of their characteristics and implementation details.
-
+In this section, we present a discussion about the prefetcher behavior, its functionality, and provide an example.
+Moreover, we present the simulators used in this article, exploring some of their characteristics and implementation details.
 
 \subsection{Prefetcher}
 
@@ -252,10 +151,7 @@ Based on the pattern identified, speculative accesses are inserted into the L2 M
 These speculative requests are made directly to the L2 cache in order to avoid a redundant cache fill if the speculated line already resides in the cache.
 These accesses are seen as regular requests made to the L2 by the prefetcher, so the L2 does not actually need to forward the response to the L1.
 If the speculated address is not present in the L2 yet, the next levels in the hierarchy will forward the response to whoever requested it, as in a regular access.
-%so it will eventually be received by the L2 when a L2 miss occurs and it requests the prefetch to its next level.
 Thus, when the processor needs the data requested by prefetch, it will already be at a closer cache level (in this case, the L2 cache).
-
-
 
 \subsection{Simulators}
 
@@ -266,7 +162,6 @@ To develop and analyze new ideas that attenuate problems arising from parallelis
 For example, in systems with dozens of cores, problems such as the interference among the different threads and the communication costs among them must be modeled to obtain accurate results.
 Thread interactions occur mainly through shared memory, with several threads accessing the same memory addresses, making necessary to keep data coherence in the several cache levels.
 Thereby, parallel simulators must provide an accurate implementation of cache coherence protocols and ensure data consistency through the memory hierarchy.
-
 
 In the following subsections, we present the two simulators used in this work, ZSim\cite{sanchez2013zsim} and Sniper\cite{carlson2014aeohmcm}.
 
@@ -298,95 +193,54 @@ Therefore, as the prefetcher is not simulated, we seek to understand the impact 
 
 Sniper is a simulator that extends the original interval simulation model~\cite{genbrugge2010interval} to improve its handling of overlapping memory accesses through a more detailed dependency analysis of memory accesses~\cite{carlson2014aeohmcm}.
 The simulator presents the instruction-window centric (IW-centric) simulation model, a high-level core model that combines the interval modeling with a detailed simulation model of the instruction window, or reorder buffer (ROB)~\cite{carlson2014aeohmcm}.
-%The simulator presents the instruction-window centric (IW-centric) simulation model, a high-level core model that combines the interval modeling with a detailed simulation model of the instruction window, or reorder buffer (ROB).
-%This methodology is called instruction-window centric (IW-centric) simulation.
 The IW-centric simulation model focuses on accurately simulating the parallelism and latencies of instructions' execution in the processor. 
 This is done by modeling micro-op dependency and issue timing in detail, estimating the performance by processing micro-ops out of order, in a way similar to how a real processor would issue them~\cite{carlson2014aeohmcm}.
 However, the IW-centric model requires a longer simulation time.
 For that reason, in this study we make use of their improved interval simulation model.
 
-% eu tinha falado do IW-centric model, enquanto que nos nossos experimentos a gente usou o interval model deles, então vou reescrever
-%Sniper works with a structure as big as the ROB of the architecture being simulated. 
-%Each dispatched micro-op is contained in this structure and is waiting the results of the operations on which they depend. 
-%As the results are completed, additional micro-ops are issued to each functional unit, potentially out of order. 
-%Therefore, the complexity of the issue logic increases as the size of a processor’s ROB grows.
-%Additionally, the IW-centric model needs to monitor all input dependencies of each micro-op, with the cost of potentially checking micro-ops multiple times during their lifetime. %\fbm{tu viu o codigo pra afirmar isso?}
-%\vsg{nao, tudo isso que eu afirmei aqui ta no artigo de validacao deles (https://dl.acm.org/doi/10.1145/2629677)}
-
-
 The basis for interval analysis is the observation that, in the absence of miss events such as branch mispredictions and cache misses, a well-balanced superscalar out-of-order processor should smoothly stream instructions through its pipelines, buffers, and functional units~\cite{eyerman2009model}. 
-Under ideal conditions the processor sustains a level of performance (instructions per cycle) roughly equal to the superscalar dispatch bandwidth~\cite{eyerman2009model}. %\fbm{NOPE. Nope, nope. eh "equal to" algo, mas com certeza nao eh superscalar dispatch bandwidth. Falta uma referencia nessa frase tb, n sei de q artigo tiraste essa informacao}
-%\vsg{citei esse artigo acima que e justamente o citado no artigo do sniper }
-However, the smooth dispatch of instructions is intermittently disrupted by memory request miss events and branch mispredictions. %\fbm{faltou branch mispred, oq complica a historia 1 pouco}
-%\vsg{nao entendi o que tu quis dizer aqui}
+Under ideal conditions the processor sustains a level of performance (instructions per cycle) roughly equal to the superscalar dispatch bandwidth~\cite{eyerman2009model}. 
+However, the smooth dispatch of instructions is intermittently disrupted by memory request miss events and branch mispredictions.
 The effects of these events at the dispatch stage divide execution time into intervals, and these intervals serve as the fundamental entity for analysis and modeling\cite{eyerman2009model}.
 The original interval modeling is itself a simulation model that allows the simulation of prefetchers in Sniper.
-%fbm: não fica clara a ligacao desse therefore, alem de ser repetitivo com a primeira frase do paragrafo
 
 The interval simulation works with two structures named new window and old window.
 Each window contains as many micro-ops as would exist in the reorder buffer (ROB) of an out-of-order processor~\cite{carlson2014aeohmcm}.
 The new window represents the upcoming micro-ops and is fully filled the entire time, and the old window contains a list of the most recently dispatched micro-ops~\cite{carlson2014aeohmcm}.
-%In the absence of miss events, such as long-latency loads, the ILP exposed by the ROB of an out-of-order processor will determine the current performance of the core (along with the core’s maximum dispatch width).
 The instantaneous IPC is calculated as the number of micro-ops in the entire old window divided by the latency of the micro-ops on the critical path~\cite{carlson2014aeohmcm}.
 By repeating this process for each micro-op (and accumulating the leftover work for future micro-ops), Sniper can estimate the application’s instruction level parallelism (ILP) during the non penalty portion of an interval~\cite{carlson2014aeohmcm}.
 
-
-
-
 In its validation, Sniper uses the benchmark SPLASH-2\cite{woo1995splash} and also shows that the average speed-up error is small when varying the number of threads.
-%https://users.elis.ugent.be/~leeckhou/papers/ispass2019-sniper-arm.pdf
-%
 Although Sniper provides an implementation of the prefetcher's behavior, it has only been recently validated for the Cortex-A53 and Cortex-A72 ARM cores~\cite{adileh2019racing}.
 The prefetcher model is responsible for over half of the simulation error in the \emph{povray} and \emph{x264} benchmarks, as some implementation details of the real hardware are unknown.
 However, the validation used only sequential benchmarks.
 In contrast, this study contributes to a better understanding of the accuracy of the simulated prefetch model and how it behaves in simulations of parallel architectures.
 
 
-
-
 \section{Related Work}\label{sec:related}
-%\ms{francis melhora o RW?}
-%\fbm{revisado, aceito sugestoes para melhoras. colocar coisas +recentes e relacionadas a prefetcher talvez?}
-
 
 Due to the lack of explicit information that hardware companies employ to avoid competition and breaches of their intellectual property, it is difficult to obtain an accurate simulation that correctly presents all the characteristics of a processor and its architecture. 
 Therefore, designers of a simulator seek a low relative error when validating their simulator, and tailor the details of the simulator to make it sensitive specifically to the desired area of design, e.g., memory hierarchy~\cite{eeckhout2010computer}. 
 
 For instance, if we variate the amount of cache memory and try to simulate a target program that requires a large amount of cache memory, the simulator should indicate loss or gain of performance. 
-If it does not, either it does not model the cache correctly or suffers from bottlenecks in other parts of the model.%, preventing the application's sensitivity to memory access from transpiring. 
+If it does not, either it does not model the cache correctly or suffers from bottlenecks in other parts of the model.
 
 \subsection{Improving Simulator Accuracy}
 
 Microbenchmarks can be used to decrease error in basic architecture structures and as a form of reverse engineering of architectural features~\cite{fog2012microarchitecture}.
-%\ms{reviewer's head: why these guys talk about it and not use in their own work?}\fbm{great question :P allow me counter: we are interested in parallel benchmarks and measuring "prefetcher with communication" accuracy in the models, and I do not picture a microbenchmark doing that. maybe r2 stuff}
-%\ms{what I mean is whether the previous paragraph is a tiro no pe or not}\fbm{it's old stuff done for single core. I'd say it's just mandatory citation when talking about simulator accuracy, since Desikan }.
 In Desikan et al.'s work~\cite{desikan2001measuring}, the authors faced the difficulty of obtaining accurate information and studied the relevance of this information when validating the SimpleScalar simulator~\cite{austin2002simplescalar}. 
 By obtaining more information about the Alpha 21264 processor model in direct contact with the manufacturers, the authors were able to reduce the experimental microbenchmarks error from 19.5\% to 2\%.  
 With the SPEC-CPU 2000 workload, the average experimental error went from 36.7\% to 18.2\%. 
 The authors then showed how the resources found generate bottlenecks in different parts of the system than previously modeled in several articles, invalidating ideas that presented performance gains due to bottlenecks that did not exist.
-%\fbm{I feel like mentioning they had to do an errata and apologize to that paper LOL} %\cite{desikanerrata}
 
 A more recent work by Walker et al.~\cite{walker2018hardware} in this direction automates the process of finding the source of simulator error.
 The main objective of the work is to obtain more accurate energy consumption models for gem5, but to do so they required a more accurate processor model. 
 Using gem5 and the processor configurations provided by Gutierrez et al.'s gem5 validation~\cite{gutierrez2014sources}, Walker et al. created GemStone, a framework to find the sources of simulation error based on empirical hardware performance monitor counters (PMCs) models.
-%\ms{at this point, I expect (at the end of this section) a very convincing story of why our paper should be accepted}.
 GemStone selects the events in gem5, correlating them with the PMC events, and at last, performs one regression analysis to approximate the relationship between hardware PMCs and gem5 error, and another to approximate the relationship between gem5 events and gem5 error.
-
-%In their work, an hierarchical cluster aggregation (HCA) was used to cluster workloads from MiBench, ParMiBench, PARSEC, Dhrystone, and Whetstone (45 in total) accordingly to the values of the given PMCs.
-%They observe that workloads in the same cluster, i.e. similar values for their events, had similar Mean Percentage Error (MPE), thus correlating the MPE to the type of workload.
-%They then use HCA to cluster PMC events that correlate with each other across the workloads, finding that inter-process communication cost is too low, while branch misprediction rates are too high due to many instruction translation lookaside buffer (ITLB) misses.
-%Afterwards, GemStone selects the events in gem5, correlating them with the PMC events, and at last, performs one regression analysis to approximate the relationship between hardware PMCs and gem5 error, and another to approximate the relationship between gem5 events and gem5 error.
-%They find 8 events that model the error with $R^{2} = 0.99$ and adjusted $R^{2} = 0.99$, confirming the hypothesis regarding branches (which had a smaller correlation) causing the frequent ITLB misses.
-%GemStone also automatically identified other possible sources of error in these events, such as the data translation lookaside buffer (DTLB) prefetch faults.
-%In summary, GemStone is a promising framework to reduce simulation error, but so far it's only available for gem5.
-%\fbm{n sei como, mas tem q dar 1 tiro neles... o paper tem mt erro gramatical, mas a ideia eh solida, vao perguntar pq n usamos gem5. also, tem q cortar 1 pouco desses paragrafos, se alguem tiver sugestoes...}\ms{eu cortaria esse paragrafo inteiro}
-
-
 
 \subsection{Prefetcher Simulation}
 
 The development of new prefetching techniques is an active area.
-%\ms{I suggest split the related work into subsections -- simulators -- prefetch -- motivation}
 Mittal~\cite{mittal2016survey} provides a survey on recent development of prefetching techniques up to 2016.
 In the survey, the authors describe the relevant prefetch metrics, such as accuracy, coverage, and timeliness~\cite{srinath2007feedback}, as well as the different types of technique to improve prefetching, such as new pattern detection techniques~\cite{nesbit2004data}, filtering prefetches~\cite{zhuang2006reducing}, dropping prefetches~\cite{lee2008prefetcher}, changing prefetches' priority on the memory controller~\cite{ebrahimi2009coordinated}, and so on.
 Given the variety of techniques and the active development of new techniques, one can hardly keep up with the design of prefetchers and additional techniques in the industry, which are not publicly disclosed.
@@ -396,7 +250,6 @@ Interestingly, many of these techniques are not tested in multithreaded applicat
 \subsection{Simulator Survey} 
 
 Since Desikan's work, several simulators have been created along a validation effort to evaluate their accuracy.
-%\ms{fiquei ou ficou confuso - os caras que tao propondo o simulador tao mostrando o erro eh isso?}\fbm{eh exatamente isso}.
 In Akram et al's research~\cite{akram2019survey}, the authors evaluated and compared the gem5~\cite{binkert2011gem5}, Multi2Sim~\cite{ubal2012multi2sim}, MARSSx86~\cite{patel2011marss}, PTLsim~\cite{yourst2007ptlsim}, Sniper~\cite{carlson2014aeohmcm}, and ZSim~\cite{sanchez2013zsim} simulators. 
 After thorough characterization of the simulators, the authors tested single core and multiprogrammed workloads on each simulator. 
 The results of each simulator were compared with the Intel's Haswell architecture~\cite{hammarlund2014haswell}. 
@@ -405,30 +258,13 @@ Thus, they concluded that the lack of validation of a simulator for the target a
 
 However, Akram's work does not use multi-thread applications to verify the error relative to the number of threads and the accuracy of communication in these simulators.
 The two best simulators in Akram's results, in terms of accuracy, were Zsim and Sniper, which we selected for this work.
-%\ms{applications? some works use the term multi-thread workloads as multiple multithreaded applications running at the same time}
-%\ms{um pouco deslocado esse paragrafo}
-
-
-
-%\subsection{Discussion and Motivation}
-
-%We are interested in parallel benchmarks and measuring the ``prefetcher with communication'' accuracy in the models, which has not been analyzed in any of the previous works.
-%To do so, we evaluate and compare hardware counters and simulator events related to the prefetchers, pointing out the sources of inaccuracy in the prefetcher modeling, such as the lack of aggressive adaptability or prefetch filtering/dropping, which has been reported by Intel~\cite{intelmanual}.
-%\fbm{vou adicionar algo coerente assim q terminar de passar por todo o paper :P}
-
 
 \section{Methodology and Experimental Environment}\label{sec:experiments}
-%We are interested in parallel benchmarks and measuring the ``prefetcher with communication'' accuracy in the models, which has not been analyzed in any of the previous works.
-%To do so, we evaluate and compare hardware counters and simulator events related to the prefetchers, pointing out the sources of inaccuracy in the prefetcher modeling, such as the lack of aggressive adaptability or prefetch filtering/dropping, which has been reported by Intel~\cite{intelmanual}.
 In this Section, we present details about the experimental environment and the prefetcher algorithms provided by the real machine hardware and by Sniper.
 Moreover, we describe the methodology applied in the experiments, the benchmark used and the different prefetcher combinations executed and simulated.
 
-
-%\subsection{Experimental Workflow}
 \subsection{Experimental Setup}
 \label{subsec:exp-setup}
-%\vsg{melhorar titulos}
-
 
 \begin{table}[b]
     \centering
@@ -436,8 +272,7 @@ Moreover, we describe the methodology applied in the experiments, the benchmark 
     \caption{Real machine, ZSim and Sniper configurations.}
     \label{tablehb}
     \renewcommand{\tabcolsep}{1pt}
-   % \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-   
+
    \resizebox{.8\linewidth}{!}{
     \begin{tabular}{{@{\hspace{0.0cm}} l @{\hspace{0.1cm}} @{\hspace{0.1cm}} c @{\hspace{0.1cm}} @{\hspace{0.1cm}} c @{\hspace{0.1cm}} @{\hspace{0.1cm}} c
     @{\hspace{0.1cm}} @{\hspace{0.1cm}} c @{\hspace{0.1cm}} @{\hspace{0.1cm}}}}
@@ -450,35 +285,6 @@ Moreover, we describe the methodology applied in the experiments, the benchmark 
 
     Pipeline Stages & 18 & 16  &  16\\
 
-%    Busca de Instruções & 16B & 16B  \\
-    
-%    Fila de Instruções & 18 & \textbf{NA} \\
-    
-%    Decodificação Paralela & até 5 uops & até 5 uops \\
-    
-%    Buffer de Decodificação & 56 & 28 \\
-    
-%    \emph{cache} de uops & 1536 uops & \textbf{NA} \\ 
-    
-%    Renomeação & 4 uops & 4 uops \\
-    
-%    Estações de Reserva & 54 & 36 \\
-    
-%    Execução  & até 6 uops & até 5 uops \\
-    
-%    Buffer de Reordenamento & 168 & 128 \\
-    
-%    Buffer de Leitura & 32 & 32 \\
-    
-%    Buffer de Escrita & 16 & 32 \\
-    
-%    Graduação Paralela & 4 & 5 \\
-   
- %   \midrule
- %   Preditor de Desvios & Tournament  & 2-level PAg \\
-    
- %   Penalidade & 15-20 & 17 \\
-    
     \midrule
     Cache Line Size & 64~B & 64~B  & 64~B\\
     
@@ -509,8 +315,6 @@ Moreover, we describe the methodology applied in the experiments, the benchmark 
     }
 \end{table}
 
-
-% msserpa: quando vir mintor colocamos a tabela dos hardware counters. agora pode dar mais motivo para os revisores
 \new{To collect information about the application execution in the real machine, we make use of the PAPI~\cite{terpstra2010papi} tool.
 PAPI allows the obtaining of hardware counters values, a set of registers that provide information about CPU events such as the number of instructions and the number of cycles.
 In each real execution, only one hardware counter is evaluated, thus avoiding aggregations or approximations that the tool performs when calculating several metrics in the same execution.}
@@ -520,34 +324,23 @@ The simulation environment is an approximation of the real hardware, respecting 
 Each simulation was executed only once, and all statistics were extracted from the same simulation.
 \textbf{All the executions in the real machine were performed with the Intel Turbo Boost~\cite{rotem2012turbo} technology disabled.}
 
-%\ms{falar da cache non-inclusive. que esse processador eh. e o que significa isso}.
 \textbf{An important observation regarding Skylake's architecture is the change from an inclusive L3 cache to a non-inclusive one.
 Skylake's predecessor architecture was Intel Broadwell, which applies an inclusive L3 cache, meaning that all data brought into the L2 cache is also brought into the LLC.
 However, in non-inclusive L3 caches like the one used by Skylake, the data found at the L2 cache may or may not be found in the LLC, and there is no guarantee regarding how it will behave.
 Which data is brought to which level depends on the application's access pattern, code and data sizes and their layout in the memory, and also on the inter-thread communication and sharing behavior.
 }
 
-
-%\ms{nao sei se aquele 2.1 - 3 GHz eh necessario... so pra botarem minhoca. E se eh pela realidade eh na verdade 0.8 - 3 GHz o correto}
 Table~\ref{tablehb}  presents the configuration of the real machine and the processor simulated by ZSim and Sniper. 
 The Sniper's out of order core model was based on the Nehalem architecture~\cite{carlson2011sniper}, while ZSim based its out of order core model implementation on the Westmere architecture~\cite{sanchez2013zsim}, a process shrink of Nehalem.
 Therefore, both simulators present a 16 stages pipeline, while the real machine architecture may present between 14 and 19 stages~\cite{fog2012microarchitecture}.
 Other parameters such as cache associativity and cache access latency are easy to configure in the simulators and can be found in~\cite{fog2012microarchitecture,doweck2017skylake}.
 
-
-
-%\ms{qual fonte de 11way na L3?}
-%\vsg{pag da skylake no wikichip}
-%\ms{okkk}
-
-%informações sobre os prefetchers agora: citar os prefetchers que são apresentados no optimization manual https://en.wikichip.org/w/images/d/d0/intel-ref-248966-040.pdf
 In Table~\ref{prefetches}, we present the description of the prefetcher algorithms considered in this work. 
 The algorithms found in the L1 cache hardware are the Data Cache Unit (DCU) Prefetcher~\cite{intelmanual} and the DCU IP Prefetcher~\cite{intelmanual}.
 The DCU Prefetcher, also known as the streaming prefetcher, is triggered by an ascending access to very recently loaded data. 
 The processor assumes that this access is part of a streaming algorithm and automatically fetches the next line.
 The DCU IP Prefetcher keeps track of individual load instructions (based on their instruction pointer's value). 
 If a load instruction is detected to have a regular stride, then a prefetch is sent to the next address which is the sum of the current address and the stride.
-
 
 The L2 Hardware Prefetcher~\cite{intelmanual} and the L2 Adjacent Cache Prefetcher~\cite{intelmanual} are the prefetcher algorithms found in the real machine L2 cache.
 The L2 Hardware Prefetcher monitors read requests from the L1 cache for ascending and descending sequences of addresses. 
@@ -582,11 +375,6 @@ Based on the Sniper's prefetchers, the following systems were simulated:
 \end{itemize}
 
 Since ZSim does not model the prefetcher behavior, there are no variations of the simulated system. With ZSim we only perform simulations with no prefetcher, which we refer to as ZSim.
-
-%comentar tbm que o modelo de simulação usado no sniper é o interval e tbm falar dos modelos de prefetcher que tão disponíveis e quais foram usados
-
-\vsg{tabela com os counters que foram utilziados e os significados (Matheus)}
-
 
 
 \begin{table}[]
@@ -763,7 +551,7 @@ Despite the L1 prefetcher issuing more prefetches than the L2 prefetcher in seve
 \new{Another complementary explanation for this small performance gains observed for the L1 prefetcher is that its requests may be detrimental to performance, since they may compete with demand data for the rather limited cache space on the L1 cache level.
 Moreover, these prefetch requests may also occupy too many entries on the line fill buffers present in the L1 hardware, competing again for shared and limited resources with the critical demand accesses, which are more relevant for the immediate processor execution than the prefetched lines.}%\fbm{"may occupy too many entries" is a bit uncertain. I think the limited line fill buffers certainly play a part here, but there is a lot of "may" on this paragraph that makes the text feel like pure speculation}\vsg{I removed part of the "may"}
 
-The \textbf{L1+L2} prefetcher combination is often set as the default setting in the machine configurations.
+The \new{L1+L2} prefetcher combination is often set as the default setting in the machine configurations.
 One of its main appeal is that it is the setting that provides the best performance. 
 \new{However, one drawback of this approach lies in the interpretability of what is being performed by the algorithms.
 The lack of understanding over the full prefetcher hierarchy behavior hinders the accurate implementation of prefetching models in architecture simulators, which will be demonstrated in detail in Section~\ref{sec:simulation}}.%\fbm{NN are not interpretable, and people still use it a lot. I'm not sure how valid this point is} \vsg{Maybe our point here was to highlight that the lack of understanding over the prefetcher hierarchy hinders the accurate implementation of a prefetcher simulation model. I rewrote it.}
@@ -1139,6 +927,7 @@ Similarly to other architecture simulators, Sniper implements an inclusive L3 ca
 % \usepackage{booktabs}
 % \usepackage{multirow}
 
+\begin{comment}
 \begin{table}[]\centering
 \caption{Total number of prefetches issued by the simulation and by the real hardware.}
 \label{table:num_pref}
@@ -1162,6 +951,8 @@ Similarly to other architecture simulators, Sniper implements an inclusive L3 ca
 \multicolumn{1}{c|}{\textbf{MG}}                            & 452.0  & 202.7  & 112.8 & \multicolumn{1}{c|}{42.0}  & 543.7     & 271.2    & 124.0    & 40.8   
 \end{tabular}
 \end{table}
+
+\end{comment}
 
 
 \begin{figure}[b]
@@ -1324,7 +1115,7 @@ Metrics as energy-delay product (EDP)~\cite{gonzalez1996edp} may help us to unde
 
 %mais benchmarks, apps reais
 \section*{Acknowledgements}
-This work has been partially supported by Petrobras (2016/00133-9, 2018/00263-5) and Green Cloud project (2016/2551-0000 488-9), from FAPERGS and CNPq Brazil, program PRONEX 12/2014. This study was financed in part by the Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Finance Code 001. Experiments presented in this paper were carried out using the PCAD infrastructure, \url{http://gppd-hpc.inf.ufrgs.br}, at INF/UFRGS.
+This work has been partially supported by Petrobras (2016/00133-9, 2018/00263-5) and Green Cloud project (2016/2551-0000 488-9), from FAPERGS and CNPq, program PRONEX 12/2014. This study was financed in part by the Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES) - Finance Code 001. Experiments presented in this paper were carried out using the PCAD infrastructure, \url{http://gppd-hpc.inf.ufrgs.br}, at INF/UFRGS.
 
 \bibliography{2020-ccpe-valeria}
 
