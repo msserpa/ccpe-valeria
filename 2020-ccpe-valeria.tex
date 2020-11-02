@@ -38,9 +38,9 @@
 
 
 \abstract[Summary]{
-Memory prefetcher algorithms are widely used in processors to mitigate the performance gap between the processors and the memory subsystem. 
+\new{Memory prefetcher algorithms are widely used in processors to mitigate the performance gap between the processors and the memory subsystem. 
 The complexities behind the architectures and prefetcher algorithms, however, not only hinder the development of accurate architecture simulators, but also hinder understanding the prefetcher's contribution to performance, on both a real hardware and in a simulated environment.
-In this paper, we contribute to shed light the memory prefetcher's role in the performance of parallel HPC applications, considering the prefetcher algorithms offered by both the real hardware and the simulators. 
+In this paper, we contribute to shed light the memory prefetcher's role in the performance of parallel HPC applications, considering the prefetcher algorithms offered by both the real hardware and the simulators.} 
 \new{We performed a careful experimental investigation}, executing the NAS parallel benchmark (NPB) on a real Skylake machine, and as well in a simulated environment with the ZSim and Sniper simulators, taking into account the prefetcher algorithms offered by both Skylake and the simulators. 
 Our experimental results show that: (i) prefetching from the L3 to L2 cache presents better performance gains, (ii) the memory contention in the parallel execution constrains the prefetcher's effect, (iii) Skylake's parallel memory contention is poorly simulated by ZSim and Sniper, and (iv) Skylake's non-inclusive L3 cache hinders the accurate simulation of NPB with the Sniper's prefetchers.
 }
@@ -137,12 +137,12 @@ Thus, when the data block is actually requested by the processor, it will alread
 Therefore, prefetchers are prevalent in current architectures as a technique to mitigate the main memory access bottleneck, reducing load-to-use latency and spreading accesses through time to avoid contention~\cite{bakhshalipour2019bingo}.
 Examples of common patterns are stride~\cite{chen1995effective} and stream~\cite{le2007ibm}.
 
-\begin{figure*}[!htb]
+\begin{figure}[!htb]
     \centering
-        \includegraphics[width=.7\textwidth]{figures/figpref-en.pdf}
+        \includegraphics[width=.8\textwidth]{figures/figpref-en.pdf}
   \caption{Abstraction of the prefetcher behavior.}
   \label{fig:prefetcher}
-\end{figure*}
+\end{figure}
 
 Figure \ref{fig:prefetcher} shows an example of a second level of cache (L2) prefetcher detecting a stride access pattern.
 The L2 cache forwards requests to the LLC (shown in Figure \ref{fig:prefetcher} as the event \textbf{1}).
@@ -266,14 +266,29 @@ Moreover, we describe the methodology applied in the experiments, the benchmark 
 \subsection{Experimental Setup}
 \label{subsec:exp-setup}
 
-\begin{table}[b]
+\new{To collect information about the application execution in the real machine, we make use of the PAPI~\cite{terpstra2010papi} tool.
+PAPI allows the obtaining of hardware counters values, a set of registers that provide information about CPU events such as the number of instructions and the number of cycles.
+In each real execution, only one hardware counter is evaluated, thus avoiding aggregations or approximations that the tool performs when calculating several metrics in the same execution.}
+The performance and the real executions statistics were evaluated with 10 executions of each metric, for each benchmark.
+The execution environment was composed of an Intel Xeon Silver 4116 CPU \new{with 2.1 GHz of frequency}, the Skylake microarchitecture~\cite{doweck2017skylake}.
+The simulation environment is an approximation of the real hardware, respecting the simulators' limitations.
+Each simulation was executed only once, and all statistics were extracted from the same simulation.
+\new{All the executions in the real machine were performed with the Intel Turbo Boost~\cite{rotem2012turbo} technology disabled.}
+
+\new{An important observation regarding Skylake's architecture is the change from an inclusive L3 cache to a non-inclusive one.
+Skylake's predecessor architecture was Intel Broadwell, which applies an inclusive L3 cache, meaning that all data brought into the L2 cache is also brought into the LLC.
+However, in non-inclusive L3 caches like the one used by Skylake, the data found at the L2 cache may or may not be found in the LLC, and there is no guarantee regarding how it will behave.
+Which data is brought to which level depends on the application's access pattern, code and data sizes and their layout in the memory, and also on the inter-thread communication and sharing behavior.
+}
+
+\begin{table}[!htb]
     \centering
     \footnotesize
-    \caption{Real machine, ZSim and Sniper configurations.}
+    \caption{\new{Configuration of the Real machine, ZSim and Sniper.}}
     \label{tablehb}
     \renewcommand{\tabcolsep}{1pt}
-
-   \resizebox{.8\linewidth}{!}{
+{\color{red}
+   \resizebox{.9\linewidth}{!}{
     \begin{tabular}{{@{\hspace{0.0cm}} l @{\hspace{0.1cm}} @{\hspace{0.1cm}} c @{\hspace{0.1cm}} @{\hspace{0.1cm}} c @{\hspace{0.1cm}} @{\hspace{0.1cm}} c
     @{\hspace{0.1cm}} @{\hspace{0.1cm}} c @{\hspace{0.1cm}} @{\hspace{0.1cm}}}}
     \toprule
@@ -313,22 +328,9 @@ Moreover, we describe the methodology applied in the experiments, the benchmark 
     \bottomrule
     \end{tabular}
     }
+    }
 \end{table}
 
-\new{To collect information about the application execution in the real machine, we make use of the PAPI~\cite{terpstra2010papi} tool.
-PAPI allows the obtaining of hardware counters values, a set of registers that provide information about CPU events such as the number of instructions and the number of cycles.
-In each real execution, only one hardware counter is evaluated, thus avoiding aggregations or approximations that the tool performs when calculating several metrics in the same execution.}
-The performance and the real executions statistics were evaluated with 10 executions of each metric, for each benchmark.
-The execution environment was composed of an Intel Xeon Silver 4116 CPU \textbf{with 2.1 GHz of frequency}, the Skylake microarchitecture~\cite{doweck2017skylake}.
-The simulation environment is an approximation of the real hardware, respecting the simulators' limitations.
-Each simulation was executed only once, and all statistics were extracted from the same simulation.
-\textbf{All the executions in the real machine were performed with the Intel Turbo Boost~\cite{rotem2012turbo} technology disabled.}
-
-\textbf{An important observation regarding Skylake's architecture is the change from an inclusive L3 cache to a non-inclusive one.
-Skylake's predecessor architecture was Intel Broadwell, which applies an inclusive L3 cache, meaning that all data brought into the L2 cache is also brought into the LLC.
-However, in non-inclusive L3 caches like the one used by Skylake, the data found at the L2 cache may or may not be found in the LLC, and there is no guarantee regarding how it will behave.
-Which data is brought to which level depends on the application's access pattern, code and data sizes and their layout in the memory, and also on the inter-thread communication and sharing behavior.
-}
 
 Table~\ref{tablehb}  presents the configuration of the real machine and the processor simulated by ZSim and Sniper. 
 The Sniper's out of order core model was based on the Nehalem architecture~\cite{carlson2011sniper}, while ZSim based its out of order core model implementation on the Westmere architecture~\cite{sanchez2013zsim}, a process shrink of Nehalem.
@@ -359,25 +361,7 @@ Therefore, based on the information of the address lists, it is possible to impl
 The L2 prefetcher found in Sniper is a GHB correlation based prefetcher, and in our experiments it is used as the L2 cache prefetcher.
 
 
-Therefore, based on the aforementioned prefetchers, we conducted experiments on the real machine considering: %\textcolor{red}{\textbf{ATUALIZAR AQUI QUANDO OS GRÁFICOS NOVOS EM R ESTIVEREM PRONTOS!!!!}}
-\begin{itemize}
-    \item All Skylake's L1 cache prefetchers, henceforth "Real-L1 prefetcher", or simply L1 prefetcher;
-    \item All Skylake's L2 cache prefetchers, henceforth "Real-L2 prefetcher", or simply L2 prefetcher;
-    \item All Skylake's prefetchers from both L1 and L2 cache, henceforth "Real-L1-L2 prefetcher", or simply L1+L2 prefetcher;
-    \item No prefetcher, henceforth referred to as Real-No Prefetcher.
-\end{itemize}
-
-Based on the Sniper's prefetchers, the following systems were simulated:
-\begin{itemize}
-    \item Only the L2 data prefetcher (GHB), henceforth "Sniper-L2 prefetcher", or simply Sniper's L2 prefetcher;
-    \item Both L1 (Simple) and L2 (GHB) prefetchers, henceforth "Sniper-L1-L2 prefetcher", or simply Sniper's L1+L2 prefetcher;
-    \item No prefetcher, henceforth referred to as Sniper-No Prefetcher.
-\end{itemize}
-
-Since ZSim does not model the prefetcher behavior, there are no variations of the simulated system. With ZSim we only perform simulations with no prefetcher, which we refer to as ZSim.
-
-
-\begin{table}[]
+\begin{table}[!htb]
     \centering
     \footnotesize
     \caption{Prefetcher algorithms.}
@@ -399,7 +383,24 @@ Global History Buffer & L2 Prefetcher based on global miss addresses & & \checkm
 }
 \end{table}
 
- 
+Therefore, based on the aforementioned prefetchers, we conducted experiments on the real machine considering: 
+\begin{itemize}
+    \item All Skylake's L1 cache prefetchers;
+    \item All Skylake's L2 cache prefetchers;
+    \item All Skylake's prefetchers from both L1 and L2 cache;
+    \item No prefetcher.
+\end{itemize}
+
+Based on the Sniper's prefetchers, the following systems were simulated:
+\begin{itemize}
+    \item Only the L2 data prefetcher (GHB);
+    \item Both L1 (Simple) and L2 (GHB) prefetchers;
+    \item No prefetcher.
+\end{itemize}
+
+Since ZSim does not model the prefetcher behavior, there are no variations of the simulated system. With ZSim we only perform simulations with no prefetcher, which we refer to as ZSim.
+
+
 
 \subsection{NAS Parallel Benchmarks}
 \label{subsec:nas}
@@ -425,18 +426,18 @@ In this section, we present the main results obtained by the aforementioned expe
 More specifically, here we shed light to the following question: \new{\textit{How do the different prefetchers affect the execution of NPB over a real machine with a varying level of parallelism?}}
 
 
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\linewidth]{figures/ipc-real.pdf}
+    \caption{IPC results for the real execution of the NPB applications with input class A.}
+    \label{fig:ipc}
+    
+\end{figure}
+
 
 Figure~\ref{fig:ipc} shows the instructions per cycle (IPC) for each NPB application, using the input class A, taking into account different numbers of threads and prefetchers, and with hardware prefetcher disabled as well. 
 The IPC can be understood as a general performance metric of the prefetchers when executing the applications, since an efficient prefetcher will enable more processed instructions per cycle \new{by fetching the right data at the right time}. 
 The error bars represent the variability observed among both the cores of a certain execution and the 10 distinct repetitions of the executions.
-
-
-\begin{figure}[b]
-    \centering
-    \includegraphics[width=\linewidth]{figures/fig2.pdf}
-    \caption{IPC results for the real execution of the NPB applications with input class A.}
-    \label{fig:ipc}
-\end{figure}
 
 
 As expected, we can observe that any prefetcher increases the execution performance of NPB, with the exception of the EP application. 
@@ -452,6 +453,13 @@ For concrete numbers, the L2 cache access latency is of 14 cycles, only 10 cycle
 We can observe that, for some applications (e.g. BT, FT, SP, and some executions of LU), the number of prefetch requests performed by the L1 prefetcher is larger than the number of requests performed by the L2 prefetcher, and, in some cases, it almost reaches the same amount of requests performed by the two prefetchers combined (the L1+L2 executions).
 Despite the L1 prefetcher issuing more prefetches than the L2 prefetcher in several cases, the fewer L2 prefetches are the ones who deliver the most crucial performance gains, as seen in Figure~\ref{fig:ipc}.}
 
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\linewidth]{figures/prefetch-requests-real.pdf}
+    \caption{Number of prefetch requests of the real machine executions with the input class A.}
+    \label{fig:real_l2-rqsts-all-pf}
+\end{figure}
+
 \new{Another complementary explanation for this small performance gains observed for the L1 prefetcher is that its requests may be detrimental to performance, since they may compete with demand data for the rather limited cache space on the L1 cache level.
 Moreover, these prefetch requests may also occupy too many entries on the line fill buffers present in the L1 hardware, competing again for shared and limited resources with the critical demand accesses, which are more relevant for the immediate processor execution than the prefetched lines.}
 
@@ -463,8 +471,6 @@ The lack of understanding over the full prefetcher hierarchy behavior hinders th
 For instance, the interactions between the prefetchers of each cache level (e.g., whether the L2 prefetcher considers L1 prefetches as part of the application's access stream or as prefetch requests) can cause major changes in the behavior of the memory hierarchy.
 In contrast, the L2 prefetcher in isolation provides a simpler, more transparent understanding of the prefetches performed by the algorithm, facilitating reverse engineering and reproduction or simulation of the prefetcher, almost reaching the best observed performance (L1+L2).
 At the light of these results, it may be advisable to set the L2 prefetcher on its own, as opposed to the L1+L2 setting, since the lack of transparency in the details of the L1 and L2 prefetcher, the L1 line fill buffer contention, and the additional energy consumption of the L1 prefetcher may not outweigh its increase in performance.
-
-
 
 Another interesting trend observed in Figure~\ref{fig:ipc} is the decrease in the IPC for increasing number of threads in the majority of applications and prefetchers, with the exception EP application.
 Apart from EP -- which, for the same reasons explained above, the IPC is stable for any number of threads on all cores -- the NPB applications use memory accesses and inter-thread communications, that naturally increase in function of the total number of threads. 
@@ -478,14 +484,6 @@ In this regard, we hypothesize that, when the number of concurrent threads execu
 However, an interesting exception to this observation is the CG application's executions with the L1 prefetcher and without prefetcher (Figure~\ref{fig:ipc}), where the IPC increases in function of the number of threads. 
 We explain the CG case with more details in Section~\ref{subs:cg}.
 
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=\linewidth]{figures/fig3.pdf}
-    \caption{Number of prefetch requests of the real machine executions with the input class A.}
-    \label{fig:real_l2-rqsts-all-pf}
-\end{figure}
-
-
 
 \subsection{The CG Case}\label{subs:cg}
 
@@ -497,7 +495,7 @@ This section aims to detail the CG executions to better understand the CG result
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=.3\linewidth]{figures/cg.pdf}
+    \includegraphics[width=.25\linewidth]{figures/matrix-cg.pdf}
     \caption{CG communication pattern for 32 threads. Figure obtained from: Cruz \textit{et al.}~\cite{cruz2018thread}}
     \label{fig:figcomma}
 \end{figure}
@@ -528,7 +526,7 @@ In stark contrast, the L2 prefetcher on its own is a lot more accurate, as the t
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=.8\linewidth]{figures/fig4.pdf}
+    \includegraphics[width=.8\linewidth]{figures/dram-accesses-real.pdf}
     \caption{CG main memory accesses, originated by demand reads and prefetches requests, for input class A.}
     \label{fig:drampapi}
 \end{figure}
@@ -544,13 +542,19 @@ On the other hand, configurations without the L2 prefetcher cannot hide this lat
 \subsection{Effects of Different Input Classes}
 \label{subs:NAS_WAB}
 
-
 Up to this point, we analyze the relationship between the prefetcher and the parallelism increase with fixed input size.
 However, the memory requirements of different HPC applications may vary substantially, requiring different execution parameters. 
 For instance, when considering small input sizes, an execution with several threads may highlight communication effects, which will play a decisive role in the application's performance.
 Simultaneously, the prefetcher's effectiveness may also be disturbed if we increase the parallelism in communication-intensive applications.
 In this section, we aim to better understand how the prefetcher influences performance when we vary the application's memory requirements. 
 
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=.9\linewidth]{figures/ipc-sp-w-a-b-real.pdf}
+    \caption{IPC results for the real execution of the NPB SP application, using input classes W, A, and B.}
+    \label{fig:nas_wab}
+\end{figure}
 
 In Figure~\ref{fig:nas_wab}, we present the IPC results for the SP application with different thread counts, different hardware prefetcher configurations, and variable input sizes, using NPB classes W, A, and B.
 We present the results only for the SP application since the same behavior is observed for all other NPB applications.
@@ -568,27 +572,21 @@ However, as the problem size scales, more off-core long-latency memory accesses 
 For this reason, these long-latency memory accesses, together with the prefetcher-related memory contention, harm the application's performance more fiercely in class B.
 
 
-\begin{figure}
+\section{Investigating Prefetchers on Simulation}\label{sec:simulation}
+
+\begin{figure}[!htb]
     \centering
-    \includegraphics[width=\linewidth]{figures/fig6.pdf}
-    \caption{IPC results of the NPB SP application, using input classes W, A, and B.}
-    \label{fig:nas_wab}
-\end{figure}
-
-
-
-
-
-\begin{figure}[b]
-    \centering
-    \includegraphics[width=\linewidth]{figures/fig8.pdf}
-    \caption{Experimental results comparing the performance of simulation and real execution without prefetcher.}
+    \includegraphics[width=\linewidth]{figures/ipc-no-prefetch-all.pdf}
+    \caption{\new{Obtained IPCs when no prefetcher is used for ZSim and Sniper simulations and the real execution.}}
     \label{fig:sims_nopref}
 \end{figure}
 
-
-
-\section{Investigating Prefetchers on Simulation}\label{sec:simulation}
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\linewidth]{figures/ipc-l1-l1-l2-all.pdf}
+    \caption{\new{Comparison of Sniper's L2 and L1+L2 prefetchers performance to the real executions results.}}
+    \label{fig:sniper_l2}
+\end{figure}
 
 As discussed in Section~\ref{sec:introduction}, parallel architecture simulation tools are necessary to develop and evaluate new techniques such as new prefetcher algorithms. In this regard, a key requirement is that these simulation tools can effectively simulate the parallel architecture and the parallel applications, bringing similar values of the metrics when compared to the real execution. In this section we therefore aim to clarify the following question: \textit{Using the ZSim and Sniper simulators, how do they behave and how accurately do they simulate NPB, accounting distinct prefetchers when possible?}
 
@@ -596,16 +594,7 @@ While simulators are a useful tool to test new architecture techniques, one draw
 We also only analyzed the simulation of prefetchers with the Sniper simulator, since ZSim does not simulate memory prefetchers. 
 
 
-
-\begin{figure}[b]
-    \centering
-    \includegraphics[width=\linewidth]{figures/fig88.pdf}
-    \caption{Comparison of Sniper's L2 and L1+L2 prefetchers performance to the real executions results.}
-    \label{fig:sniper_l2}
-\end{figure}
-
-
-Figure~\ref{fig:sims_nopref} shows the obtained IPCs when no prefetcher is used for six of the NPB applications, namely CG, EP, FT, IS, MG, and LU, simulating the input class A.
+Figure~\ref{fig:sims_nopref} shows the obtained IPCs when no prefetcher is used \new{for the simulations and the real execution of six NPB applications}, namely CG, EP, FT, IS, MG, and LU, simulating the input class A.
 For that we disabled the prefetcher on both the real execution and the Sniper simulation. 
 We did not make any specific changes to ZSim for this experiment, since ZSim does not support prefetcher simulation.
 
@@ -634,7 +623,12 @@ For Sniper, in its turn, the reason can be more complicated, as it has been repo
 
 
 
-
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\linewidth]{figures/prefetch-requests-real-sim.pdf}
+    \caption{\new{Number of prefetches issued by the simulation with Sniper's prefetchers, in ratio of their real counterparts. (log scale on $y$ axis).}}
+    \label{fig:sniper_l2-rqsts-all-pf}
+\end{figure}
 
 \textbf{In Figure~\ref{fig:sniper_l2}}, we compare the performance, in terms of IPC, of the Sniper's L2 prefetcher with the L2 prefetcher of the real machine, and the Sniper's L1+L2 prefetcher with the real counterpart, respetively.
 In all evaluated NPB applications, we can notice discrepancies between the Sniper simulation results and the real machine results, with Sniper mostly underestimating the IPC performance, and overestimating the communication and contention effects with increasing number of threads.
@@ -648,18 +642,7 @@ Modeling prefetcher algorithms with the same level of specificity of the real al
 This non-inclusive L3 adds new complexity to the memory subsystem simulation since the data's location in this new organization depends upon several aspects~\cite{intelmanual}.}
 Similarly to other architecture simulators, Sniper implements an inclusive L3 cache. This difference can also contribute to the discrepancies between the real execution using Skylake and the Sniper simulation.
 
-
-
-
-\begin{figure}[b]
-    \centering
-    \includegraphics[width=\linewidth]{figures/fig99.pdf}
-    \caption{Total number of prefetches issued by the simulation and by the real hardware (log scale on $y$ axis).}
-    \label{fig:sniper_l2-rqsts-all-pf}
-\end{figure}
-
-
-In Figure~\ref{fig:sniper_l2-rqsts-all-pf} we present the total number of prefetch requests performed by the Sniper's L1+L2 prefetcher, the Sniper's L2 prefetcher, and their real counterparts. The number of prefetch requests for the L1+L2 prefetcher counts the prefetches on both L1 and L2 caches.
+\new{In Figure~\ref{fig:sniper_l2-rqsts-all-pf} we present the total number of prefetch requests performed by the Sniper's L1+L2 prefetcher, the Sniper's L2 prefetcher, and their real counterparts.} The number of prefetch requests for the L1+L2 prefetcher counts the prefetches on both L1 and L2 caches.
 As expected at this point, Sniper's L2 prefetcher model was not capable to accurately simulate the Skylake's L2 prefetcher on the number of prefetch requests as well, presenting large discrepancies (notice the log scale on the $y$ axis of Figure~\ref{fig:sniper_l2-rqsts-all-pf}).
 Sniper's L1+L2 prefetcher presented a total number of prefetch requests closer to the real execution. 
 However, the similar number of prefetch requests of the Sniper's L1+L2 prefetchers does not translate in similar estimations of the applications performance, as shown in Figure~\ref{fig:sniper_l2}.
@@ -671,19 +654,12 @@ This may indicate that Sniper's memory simulation module is having issues on sim
 The non-inclusive L3 cache may also be a cause of this issue, since again Sniper considers an inclusive L3 cache.
 
 
-
-
-
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{figures/fig10.pdf}
+    \includegraphics[width=\linewidth]{figures/useless-l2-prefetches-real-sim.pdf}
     \caption{Useless prefeteches performed by the simulation and by the real hardware, in ratio of the total number of prefetches.}
     \label{fig:sniper_useless_pf_ratio}
 \end{figure}
-
-
-
-
 
 \section{Discussion and Guidelines}\label{sec:insights}
 
@@ -757,9 +733,6 @@ In this work we performed an experimental investigation of the prefetcher's role
 Among these insights, one can highlight: (i) prefetching from the L3 to L2 cache presents a more substantial contribution to performance, (ii) memory contention becomes a larger constraint in the performance as the level of parallelism increases, limiting the prefetcher's contribution, (iii) Skylake's parallel memory contention is poorly simulated by ZSim and Sniper, and (iv) Skylake's non-inclusive L3 cache hinders the accurate simulation of NPB with the Sniper's prefetchers.
 
 Since we observed that some prefetcher combinations perform unnecessary costly DRAM accesses, it is perhaps relevant to evaluate how these inaccurate prefetch requests impact energy consumption. Therefore, for future work, we intend to analyze the prefetcher's impact on energy consumption and energy-delay product (EDP)~\cite{gonzalez1996edp}. For instance, the EDP may help us understand which prefetcher configurations are more suitable considering both energy efficiency and execution time.
-%Since some prefetcher combinations are performing unnecessary costly DRAM accesses, it is relevant to evaluate how these inaccurate prefetch requests impact energy consumption.
-%Metrics as energy-delay product (EDP)~\cite{gonzalez1996edp} may help us to understand which prefetcher configurations are more suitable considering both energy efficiency and execution time.
-
 
 
 \section*{Acknowledgements}
