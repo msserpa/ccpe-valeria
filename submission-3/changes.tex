@@ -1,8 +1,6 @@
 \documentclass{article}
-%\usepackage{soul,xcolor}
 \usepackage{xspace}
 
-%Fancy usepackage to Xcolor to enable fancy colors such as ForestGreen
 \usepackage[dvipsnames]{xcolor}
 
 \usepackage{comment}
@@ -34,73 +32,6 @@
 We thank the reviewers for their comments, which helped to improve the quality of the paper.
 In this document, we included the comments of the reviewers and how we addressed each issue (formatted in \textbf{bold}).
 
-% Editor feedback:
-
-% The reviewers pointed to some issues that must be addressed in the paper, especially regarding the paper contributions, and the applicability of the obtained results. 
-
-%You should upload a new version of your manuscript up to September 6, 2020.
-
-
-% teoria
-%         CG (FB) -> 15/08 (WIP, já vimos que IPC está alterado devido a perf pegando dados de outra thread q foi mapeada)
-%             1. Primeiro problema notado foi que perf com -a -A pega estatísticas de outras threads/processos (não usamos nice no paper!)
-%             2. Ao mudarmos para uso do threadload(PAPI), conseguimos isolar os contadores, e com a política OMP\_WAIT\_POLICY=ACTIVE ou undefined, a diferença de 110 instruções é fixa.
-%             3. Porém, quando tentamos mudar para a política OMP\_WAIT\_POLICY=PASSIVE (a fim de evitar busy\_wait e as instruções adicionais), o número de instruções aumentou MUITO.
-%             4. Construímos a hipótese de que a syscall de sleep da política passiva continha muitas instruções, e que devido à syscall estar linkada com vdso ao espaço do programa, o PAPI contava as instruções/ciclos de sleep, gerando o overhead.
-%             5. Testamos em 2 partes: a) instruções/ciclos de sleep são contados pelo PAPI, b) CG com OMP\_WAIT\_POLICY=PASSIVE acarreta em sleep
-%             a) CONFIRMADO: laço de 5 iterações com sleep e sem sleep acarreta em uma diferença de milhões de instrução
-%             b) UNCONFIRMED: cg com passive NÃO FAZ SLEEP!
-%             ??? oq o openmp faz com OMP\_WAIT\_PASSIVE??
-%                 n tem function call a mais. (testado com ltrace)
-%                 n tem syscall que indique algo a mais. (testado com strace)
-                
-            
-%             WIP: rerodar INST e CYCLES com PAPI para reproduzir IPC e mostrar que gráfico estava errado
-            
-            
-            
-%             INSIGHT: PAPI >>>> PERF, não usar PERF!
-
-% prática
-%     REAL: (com relação aos pontos i, ii e iii (CG))
-%       verificar se estava ativado -> 07/08 (tava) -- DONE
-%       NAS (W, A, B) -- Turbo desativo - real - cei -> DONE
-%       fazer map dos counters do PAPI -> DONE
-%       colocar pra rodar e gerar novos resultados do real, comparar com resultados existentes na versão atual do paper -> ALMOST
-       
-%     SIMULADO: (com relação ao ponto i)
-%         Sniper: L2, L1+L2, none -> 28/08 -> almost done
-%         ZSim: só com none -> 31/08 ->
-       
-% apps do rodinia:
-%         Breadth-First Search 
-%         streamcluster
-%         knn
-%         kmeans -> I/O no laço principal 
-%         backprop
-%         b+tree
-%         Pathfinder
-        
-% Reviews:
-% i) ALMOST - reexecutamos tudo (respeitando o ponto ii), pros tamanhos W, A e B, pra mostrar a escalabilidade de acordo com a mudança do tamanho, e também estamos simulando com o tamanho W
-
-% ii) OK - desativamos turbo boost, tudo executado
-
-% iii) ONGOING - sobre Cg
-
-% iv) ONGOING - other benchmarks
-
-
-        
-% https://github.com/pjreddie/darknet
-% http://ai-benchmark.com/
-
-% https://github.com/ParBLiSS/PaSGAL
-% https://github.com/jshun/ligra
-
-% https://github.com/YSZhuoyang/parallel-random-forests
-% https://github.com/siddhantkulkarni/parallelmachinelearning
-        
 \section*{Reviewer 1}
 
 The paper provides a better understanding of the memory prefetcher’s role in the performance of High-Performance Computing (HPC) applications.
@@ -110,54 +41,17 @@ Authors performed an experimental campaign, executing the Numerical Aerodynamic 
 \vspace{.5cm} Although the manuscript has a good structure, the reviewer feels that the lack of novelty and innovative research contents are major concerns. In particular, the paper presents neither an architecture nor an innovative prefetch algorithm to improve its role in the performance of HPC applications. 
 
 \begin{answer}
-%DCS: Mentir, dizendo que foi uma observação bastante imporatnte, que revelou que um aspecto de importância crítica do artigo não estava apropriadamente claro no texto.
-%We understand and respect the reviewer's opinion. It was an important observation, which made us notice that \ms{não curti muito essa frase} perhaps one of our paper's critical aspects is not adequately clear in the manuscript. We elaborate on this crucial aspect in the following paragraphs.
 
-%\dcs{apontar a inovação que fizemos em analizar prefetcher em simulação}
+We understand and respect the reviewer's opinion. It was an important observation, which we improve in the paper and discuss in the following paragraphs.
 
-We understand and respect the reviewer's opinion. It was an important observation, which we elaborate in the paper and in the following paragraphs.
+We envision our paper as a practice investigation: there is a noticeable amount of concealment regarding the prefetcher algorithms for different architectures. These obscurities hinder the development of accurate architecture simulators and new computer architectures since companies utilize simulators to develop it.
 
-%  msserpa: inicio - comentei
-%We understand and respect the reviewer's opinion. It was an important observation, which made us notice that perhaps one of our paper's critical aspects is not adequately clear in the manuscript. We elaborate on this crucial aspect in the following paragraphs.
-%  msserpa: fim - comentei
+In this scenario, we perform experimental research to understand what happens with parallel applications' performance when one processes them in modern architectures with prefetcher algorithms. To the best of our knowledge, there are very few works investigating the impact of the prefetcher over parallel architectures -- with identification of performance bottlenecks, error sources, etc. -- and no works at all that address the prefetcher performance on architecture simulators.
 
-%Although some manufacturers provide clear definitions concerning their architectures and prefetcher algorithms, there is a noticeable amount of concealment regarding the architectures and prefetcher algorithms, \ms{cuidado} especially the ones provided by Intel. These obscurities not only hinder the development of accurate architecture simulators, though also leave us with the only choice of performing experimental research to shed light on the understanding of what happens with the performance of parallel applications when one processes them in modern architectures with prefetcher algorithms. 
+Our paper contributes to filling this hole in the literature. We conceived a paper that encapsulates all the practices and experiences we obtained when investigating memory prefetcher algorithms over parallel applications, accounting for real executions and simulations. 
+We found many essential aspects of the prefetchers' behavior over parallel applications, notably its efficiency drop when parallelism increases. We also perceived many critical specificities of the ZSim and Sniper simulators when one uses these to simulate parallel applications' execution, taking into account the prefetcher. We pioneeringly highlight some sources (notably Figure 10) of the simulators' inaccuracy that can directly guide the simulators' developers to improve their simulators' accuracy.
 
-%We understand that our paper is an alert to developers ....  that the simulators don't presents correctly what happen in a real program, ......  that is important that simulators developers need to improved then to better represents the processors' behavior .....   algo assim
-
-%\vsg{I'm not sure if I like the term "alert to developers". "Alert to architects" maybe? "investigation to architects"?}
-
-%We envision our paper as an alert to developers. Architecture simulators are a vital component for developing new prefetcher algorithms and for studies over the memory hierarchy. We show experimental evidence that the simulators do not correctly represent real architectures, specifically when we consider memory prefetcher and parallel applications. Improving simulators' accuracy is a concerning and essential matter for the future of architecture research.
-
-
-
-%\vsg{I found this first sentence kinda contradictory. First we say that some manufacturers provide clear definitions about their archs and pref algs, and then we say the opposite. Or am I confused?}
-We envision our paper as an \ms{practice and experience} investigation: there is a noticeable amount of concealment regarding the prefetcher algorithms for some architectures. These obscurities not only hinder the development of accurate architecture simulators, but also new architectures, since companies utilize simulators to develop new architectures.
-
-%\ms{nao so simuladores, mas as proprias arquiteturas reais tambem} \ms{falar aqui que empresas que desenvolvem novas arquiteturas tambem utilizam esses simuladores e vao ter falta de precisao}
-At this scenario, we are left with us with the only choice of performing experimental research to shed light on the understanding of what happens with the performance of parallel applications when one processes them in modern architectures with prefetcher algorithms. To the best of our knowledge, there are very few works that investigate prefetcher over parallel architectures -- with identification of performance bottlenecks, error sources, etc -- and no works at all that address the prefetcher performance on architecture simulators
-%We envision our paper as an experimental investigation: although some manufacturers provide clear definitions concerning their architectures and prefetcher algorithms, there is a noticeable amount of concealment regarding the architectures and prefetcher algorithms. These obscurities not only hinder the development of accurate architecture simulators, though also leave us with the only choice of performing experimental research to shed light on the understanding of what happens with the performance of parallel applications when one processes them in modern architectures with prefetcher algorithms.
-%\vsg{and it is also important to mention that very few works exist over parallel architecture prefetchers. Our work is important for helping architects to develop new prefetching algorithms on parallel architectures because we can identify error sources, performance bottlenecks, etc.}
-
-Our paper contributes on filling this ``hole'' in the literature. We conceived a paper that encapsulates all the experiences and practices we obtained when investigating memory prefetcher algorithms over parallel applications, accounting for both real executions and simulations. 
-We found many essential aspects of the prefetchers' behavior over parallel applications, notably its efficiency drop when parallelism increases. We also perceived many critical specificities of the ZSim and Sniper simulators, when one uses these to simulate the execution of parallel applications, taking into account the prefetcher when possible. We pioneeringly highlight some sources (notably Figure \ms{ajustar}10) of the simulators' inaccuracy that can directly guide the simulators' developers to improve their simulators' accuracy.
-%\vsg{I guess we can be more direct here mentioning that we were able to identify a few errors, for example, the small usefulness of the prefetches being issued. We not only show that the simulators don't present the expected performance, but we also show "proofs" of their error sources. This is something that may have a direct effect on other people's research.}
-
-In the revised version, we added a new section (Section \ms{conferir}7) to strengthen the aspect mentioned above, which emphasizes on providing guidelines, with technical details when pertinent. We are confident that the findings presented by the manuscript can give reliable guidance as to which practices one can follow to research and develop architectures, simulators, and prefetcher algorithms. 
-
-
-
-%DCS: Mencionar alguns highlights das observações mais importantes do paper
-%We are confident that, with the findings presented by the paper, we can provide helpful information and insights to guide future architecture and prefethcer algorithms practices and resarch, on both real and simulated scenarios. %DCS: Aprimorar mais essa úlima frase, dizendo que pode também guiar pesquisa em simuladores de arquitetura
-
-%\ms{pensar muito bem em como responder. é a resposta mais importante dessa revisão}
-%\ms{falar as contribuições}
-
-
-%\vsg{Danilo sugere que esse nem era o ponto do artigo, então é bom comentar isso}
-%\vsg{existem prefetchers que tentam justamente lidar com problemas causados por inter-core etc}
-%\vsg{é uma revista de practice and experience}
-%\ms{cuidado com esse tipo de resposta :)}
+In the revised version, we added a new section (Section 7) to strengthen the aspect mentioned above, emphasizing providing guidelines with technical details when pertinent. We are confident that the findings presented by the manuscript can give reliable guidance as to which practices one can follow to research and develop architectures, simulators, and prefetcher algorithms.
 
 \end{answer}
 
@@ -182,15 +76,10 @@ The minor revisions recommendation, doubts, and comments are:
 \end{description}
 
 \begin{answer}
-%\ms{fazer experimentos com diferentes tamanhos do NAS (talvez menor ai é mais rápido no simulador)}
-%\vsg{ver se ta bem especificado no texto o tamanho do problema e que é mantido fixo}
 
-%\dcs{Rodando com o W, o IPC do IS aumentou (mais ou menos como o CG), mas o IPC do CG não aumentou da mesma maneira que com o A. Tirando isso as demais apps se comportaram mais ou menos da mesma maneira (IPC caindo). O B me parece mais interessante, pq o IPC de todo mundo cai mais rápido (inclusive o CG!). Acho que adicionar o B ao invés do W ficaria mais interessante no paper.}
+We thank the reviewer for the comment. All of the real and simulated experiments were executed using the input size class A of the NAS benchmark. We chose class A because it was the class that enabled us to perform simulations with Sniper in a reasonable time.
 
-We thank the reviewer for the comment. All of the real and simulated experiments were executed using the input size class A of the NAS benchmark . %\ms{eu nao falaria nada disso daqui pra frente} The A class situates on the lower end of the available input sizes. From the smallest to the largest, we have classes S, W, A, B, C, D, E, and F. \ms{manteria esse aqui so}
-We chose class A because it was the class that enabled us to perform simulations with Sniper in reasonable time.
-
-As cleverly pointed out, we agree that the input size can also be affecting the performance. With this in mind, in the revised version of the manuscript we added experiments taking into the account the input size class W, A, and B of the NAS benchmark. These new experiments can be found in Section \ms{conferir}5.2 of the revised manuscript. We also added information regarding to the NAS input size classes on last paragraph of Section \ms{conferir}4.2.
+As cleverly pointed out, we agree that the input size can also be affecting the performance. With this in mind, in the revised version of the manuscript, we added experiments taking into account the input size class W, A, and B of the NAS benchmark. These new experiments can be found in Section 5.2 of the revised manuscript. We also added information regarding the NAS input size classes in the last paragraph of Section 4.2.
 \end{answer}
 
 \begin{description}
@@ -198,24 +87,8 @@ As cleverly pointed out, we agree that the input size can also be affecting the 
 \end{description}
 
 \begin{answer}
-%dcs: executamos com turbo boost on e off com o PAPI e não notamos diferença no IPC
-%dcs: o lance com o perf eh que ele coleta os dados system-wide, então dados de outros processos do sistema podem interferir
-%dcs: portanto a gente trocou de perf para PAPI, que coleta os dados application-wide
-%dcs: a verdade foi com o turbo boost ON, mas falar que foi off não muda nada, já que a gente vai trocar todos os gráficos praticamente
 
-All executions were performed with the Intel Turbo Boost disabled, with a clock frequency of 2.1 GHz. However, we noticed some anomalies in the experiments, notably high variabilities (error bars) in some applications for the IPC. We later found out that the Perf profiling tool collects data in a system-wide manner, meaning that system processes may interfere in the results. We decided therefore to rerun the experiments using the PAPI profiling tool, since PAPI provides more control over the measurements and, most importantly, it collects performance data application-wide, and not system-wide. We updated all figures that showed data about real executions with the updated results using PAPI. We added the information about Turbo Boost and clock frequency in Section \ms{conferir}4.1, and the technical information about PAPI and Perf in Section \ms{conferir}7.3.
-%\ms{acho que no paper n precisa ter mais nada sobre perf}
-%\dcs{adicionei o lance do perf no paper pq parece ser um detalhe tecnico de practice and experience interessante}
-
-%\ms{refazer tudo com turbo boost desligado e comparar com o que enviamos (turbo boost ativado)}
-
-%\ms{lorenzon tem experimentos que mostram que para algumas aplicações da bastante diferença (principalmente nos ciclos)}
-
-%\ms{lorenzon: se ela é cpu-bound, os ganhos são bons}
-%\ms{lorenzon: se é memory-bound, depende da parte sequencial}
-%\ms{lorenzon: mas o consumo de energia, no geral, sempre aumenta.}
-
-
+All executions were performed with the Intel Turbo Boost disabled, with a clock frequency of 2.1 GHz. However, we noticed some anomalies in the experiments, notably high variabilities (error bars) in some applications and metrics. We later found out that for core-level measurements, the Perf profiling tool collects data in a system-wide manner, meaning that system processes may interfere in the results. Therefore, we decided to rerun the experiments using the PAPI profiling tool since PAPI provides more control over the measurements and, most importantly, it collects performance data application-wide and not system-wide. We updated all figures that showed data about real executions with the updated results using PAPI. We added the information about Turbo Boost and clock frequency in Section 4.1 and the technical information about PAPI and Perf in Section 7.3.
 
 \end{answer}
 
@@ -224,8 +97,8 @@ All executions were performed with the Intel Turbo Boost disabled, with a clock 
 \end{description}
 
 \begin{answer}
-For this task we separated the CG-NPB discussion into a dedicated section (Section \ms{conferir}5.1 of the revised manuscript) where we deepened the analysis of the CG-NPB application, with a better description of its communication pattern and its DRAM accesses, to shed light on the prefetcher's performance on GC-NPB.
 
+We separated the CG-NPB discussion into a dedicated section (Section 5.1 of the revised manuscript) where we deepened the analysis of the CG-NPB application, with a better description of its communication pattern and its DRAM accesses, to shed light on the prefetcher's performance on GC-NPB.
 
 \end{answer}
 
@@ -234,11 +107,8 @@ For this task we separated the CG-NPB discussion into a dedicated section (Secti
 \end{description}
 
 \begin{answer}
-%\ms{outros benchmarks -- talvez rodinia (esse tem ML e grafos) ou spec omp?}
-%\dcs{Vamos ver se teremos tempo para colocar o rodinia-backprop. Senão a gente inventa uma resposta, generalizando as observações para outras apps. Dá pra responder, por exemplo, quais características uma app precisa ter para que os resultados que obtivemos sejam similares}
 
-\dcs{adicionei a frase abaixo, pra tentar dar mais coerencia a resposta}
-Analyzing the characteristics each of the NAS applications, and their performances during our investigation, we were able to generalize a set of application features (that we describe below), in a way that any kind of highly parallel application that has these features can benefit from our recommendations.  Our recommendations can be extended \ms{achei muito focado em embarrassingly ou nao, mas nao foi isso que o revisor perguntou. Ele falou que nossa conclusao tem recomendacoes para apps highly parallel e aqui ta falando que nao sao embarrassingly. o argumento tem que ser que o comportamento de ML ou grafos eh similar com alguma das aplicacoes do NAS, por exemplo, logo nossas recomendacoes sao validas} \dcs{eu nao sei nenhum algo de ML ou grafos que se parece com as apps do NAS, por isso que fui nessa estrategia de generalizar caracteristicas} for (i) any non-embarrassingly parallel application, and for (ii) embarrassingly parallel applications with in-place memory operations. Many parallel applications are non-embarrassingly parallel since embarrassingly parallel preventing operations such as locking and synchronization are often required in parallel algorithms such as parallel Map Reduce \dcs{talvez trocar mapreduce por outro algo de grafos. estou sem ideias} or Stochastic Gradient Descent (core of many Machine Learning Algorithms). Embarrassingly parallel applications with in-place memory operations are less common, such as the pseudo-random number generation performed by EP-NPB. Our recommendation's exceptions are embarrassingly parallel applications that operate over vectors/matrices, such as parallel vector sum or matrix multiplication. These applications do not suffer from contention caused by synchronization or locking and may benefit from prefetchers since the number of memory accesses of these applications is significant. We added the aforementioned information in Section \dcs{sempre conferir}7.2 of the new version of the manuscript.
+Analyzing the characteristics of each of the NAS applications and their performances during our investigation, we were able to generalize a set of application features (that we describe below) in a way that any highly parallel application that has these features can benefit from our recommendations.  Our recommendations can be extended for (i) any non-embarrassingly parallel application and (ii) embarrassingly parallel applications with in-place memory operations. Many parallel applications are non-embarrassingly parallel since embarrassingly parallel preventing operations such as locking and synchronization are often required in parallel algorithms such as parallel Map Reduce or Stochastic Gradient Descent (the core of many Machine Learning Algorithms). Embarrassingly parallel applications with in-place memory operations are less common, such as the pseudo-random number generation performed by EP-NPB. Our recommendation's exceptions are embarrassingly parallel applications that operate over vectors/matrices, such as parallel vector sum or matrix multiplication. These applications do not suffer from contention caused by synchronization or locking and may benefit from prefetchers since the number of memory accesses of these applications is significant. We added the information mentioned above in Section 7.2 of the new version of the manuscript.
 \end{answer}
 
 
